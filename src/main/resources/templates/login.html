@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="stylesheet"
+	href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="/webjars/bootstrap-icons/1.10.3/font/bootstrap-icons.css">
+</head>
+<body>
+	<div class="row mt">
+		<div class="col-md-12 py-2 text-center text-white bg-dark">
+			<h6>Pay My Buddy</h6>
+		</div>
+	</div>
+	<div class="row mt-5">
+		<div class="col-md-4 offset-4">
+			<div class="card" style="width: 310px">
+				<div class="card-body">
+					<div class="col-md-6 offset-3 py-2 align-items-center mb-5 bg-success rounded" style="width: 135px">
+						<div class="text-white text-center textBold">
+							Pay My Buddy
+						</div>
+					</div>
+
+					<form method="post" th:action="@{/oauth2/authorization/github}">
+						<div class="row justify-content-center px-0">
+							<div class="col-auto">
+								<button type="submit" class="btn btn-outline-primary" style="font-weight: bold;">GITHUB</button>
+							</div>
+						</div>					
+					</form>
+
+					<hr>
+						
+   					<form method="post" th:action="@{/login/authentication}">
+						<div class="mb-4 mt-3">
+							<input type="email" class="form-control" id="Email" placeholder="Email" name="email">
+						</div>
+						
+						<div class="mb-4 mt-3">
+							<input type="password" class="form-control" id="Password" placeholder="Password" name="password">
+						</div>
+						
+						<div th:if="${param.error}" class="alert alert-danger">    
+						    Invalid email and/or password.
+						</div>
+
+						<div class="col-md-6 offset-3">
+							<div class="form-check mb-2">
+								<label class="form-check-label textBold">
+									<input class="form-check-input" type="checkbox" name="remember">Remember me
+								</label>
+							</div>
+							
+							<button type="submit" class="btn btn-primary col-md-12 mb-3 mt-5" style="font-weight: bold;">Login</button>
+						</div>
+					</form>
+
+					<form method="get" th:action="@{/newUser/createUser}">
+						<div class="col-md-6 offset-3">
+							<button type="submit" class="btn btn-success col-md-12 mb-3 mt-3 px-0" style="font-weight: bold;">Create account</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

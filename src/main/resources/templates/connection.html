@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="template.html">
+<head>
+<meta charset="UTF-8">
+<title>Connections</title>
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="stylesheet"
+	href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="/webjars/bootstrap-icons/1.10.3/font/bootstrap-icons.css">
+<script src="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="row textBold">
+			<div class="px-5 py-2 bg-light text-blue">
+				<a class="home" style="text-decoration:none">Home  /</a>
+				<a class="page_connection text-secondary" style="text-decoration:none">Transfer / Connections</a>
+			</div>
+		</div>
+		
+		<div class="row col-10 offset-1">
+			<div class="row justify-content-between align-items-end px-0 mt-3">
+				<div class="col-auto px-0 ">
+					<a class="text-dark textBold" style="text-decoration: none">Add Connections</a>
+				</div>
+			</div>
+	
+			<div class="row bg-light">
+				<form method="post" th:action="@{/user/transfer/saveConnection}" th:object="${emailUserConnectionDTO}">
+					<div class="row px-5 py-4 justify-content-evenly">
+						<div class="col-5">
+						    <label for="Email">Email</label>
+							<input  th:field="*{email}" type="email" class="form-control" id="Email" placeholder="Email" name="email" required>
+						</div>
+
+						<div class="col-5">
+						    <label for="Pseudo">Pseudo</label>
+							<input th:field="*{userConnection.pseudo}" type="text" class="form-control" id="Pseudo" placeholder="Pseudo" name="pseudo" required>
+						</div>
+
+						<div class="col-2">
+							<button type="submit" class="btn btn-primary mt-4 px-4" style="font-weight: bold;">Add</button>
+						</div>
+
+						<div class="col-12 mb-3">
+							<div th:if="${errorMessage}" class="mt-2 alert alert-danger text-center">
+							    <p th:text="${errorMessage}"></p>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+	
+			<div class="row align-items-end px-0 mt-3">
+				<div class="col-auto px-0 ">
+					<a class="text-dark textBold" style="text-decoration: none">My Connections</a>
+				</div>
+			</div>
+	
+			<div class="row px-0 border border-dark">
+				<form th:object="${emailUserConnectionDTO}" class="px-0">
+					<table class="table table-striped table-borderless">
+						<thead>
+							<tr class="text-center text-light" bgcolor="198754">
+								<th>Emails</th>
+								<th>Pseudo</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="p:${listEmailPseudo}" style="vertical-align: middle;">
+								<td th:text="${p.email}"></td>
+								<td th:text="${p.userConnection.pseudo}"></td>
+								<td class="col-1 px-0" th:align="center" th:if="${p.userConnection.pseudo != 'Me'}">
+									<a onclick="return confirm('Are you sure you want to delete this connection ?')"
+										class="btn btn-danger"
+										th:href="@{/user/transfer/deleteConnection(id=${p.userConnection.userConnectionId})}">
+										<i class="bi bi-trash"></i>
+									</a>
+								</td>
+								<td class="col-1" style="height: 50px;" th:align="center" th:if="${p.userConnection.pseudo == 'Me'}">
+									<input type="hidden">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+	
+			<div class="row justify-content-center" th:if="${pages.length} > 1">
+				<ul class="nav nav-pills col-auto">
+					<li th:each="page,status:${pages}">
+						<a th:class="${status.index==currentPage?'btn btn-primary ms-1':'btn btn-outline-primary ms-1'}"
+						th:href="@{/user/transfer(page=${status.index}, keyword=${keyword})}"
+						th:text="${status.index}"> </a></li>
+				</ul>
+			</div>
+	
+		</div>
+	</div>
+</body>
+</html>

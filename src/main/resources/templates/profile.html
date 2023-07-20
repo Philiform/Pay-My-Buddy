@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="template.html">
+<head>
+<meta charset="UTF-8">
+<title>Profile</title>
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="row textBold">
+			<div class="px-5 py-2 bg-light text-blue">
+				<a class="home" style="text-decoration:none">Home /</a>
+				<a class="page_html text-secondary" style="text-decoration:none">Profile</a>
+			</div>
+		</div>
+
+		<div class="row col-10 offset-1">
+			<div class="row justify-content-between align-items-end px-0 mt-3">
+				<div class="col-auto px-0 ">
+					<a class="text-dark textBold" style="text-decoration: none">Profile</a>
+				</div>
+			</div>
+	
+			<div class="row bg-light">
+				<form method="post" th:action="@{/user/saveProfile}" th:object="${profileDTO}">
+					<div class="row px-5 py-4 align-items-center">
+						<div class="col-5 mb-3">
+							<label>Email</label>
+							<input type="email" class="form-control" th:field="*{email}" required>
+						</div>
+						<div class="col-7">
+						</div>
+						<div class="col-5">
+							<label>First Name</label>
+							<input type="text" class="form-control" th:field="*{firstName}" required>
+						</div>
+						<div class="col-5">
+							<label>Last Name</label>
+							<input type="text" class="form-control" th:field="*{lastName}" required>
+						</div>
+						<div class="col-1">
+							<button type="submit" class="btn btn-primary mt-4 px-2 textBold"><i class="bi bi-save"></i></button>
+						</div>
+						<div class="col-1 mt-4">
+							<a onclick="return confirm('Are you sure you want to delete your account ?')" class="btn btn-danger"
+								th:href="@{/user/deleteProfile}">
+								<i class="bi bi-trash"></i>
+							</a>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<div class="row justify-content-between align-items-end px-0 mt-3">
+				<div class="col-auto px-0 ">
+					<a class="text-dark textBold" style="text-decoration: none">Bank Account</a>
+				</div>
+			</div>
+	
+			<div class="row bg-light">
+				<form method="post" th:action="@{/user/saveBankAccount}" th:object="${externalBankAccount}">
+					<div class="row px-5 py-4 align-items-center">
+
+						<div class="col-10">
+							<label>Bank Account Number</label>
+							<input type="text" class="form-control" th:field="*{bankAccount.number}" required />
+							<input type="hidden" th:field="*{externalBankAccountId}" />
+							<input type="hidden" th:field="*{user}" />
+							<input type="hidden" th:field="*{bankAccount}" />
+							<input type="hidden" th:field="*{creditCard}" />
+						</div>
+						<div class="col-1">
+							<button type="submit" class="btn btn-primary mt-4 px-2 textBold"><i class="bi bi-save"></i></button>
+						</div>
+						<div class="col-1 mt-4">
+							<a onclick="return confirm('Are you sure you want to delete your bank account ?')" class="btn btn-danger"
+								th:if="*{bankAccount.bankAccountId > 0}"
+								th:href="@{/user/deleteBankAccount(id=*{externalBankAccountId})}">
+								<i class="bi bi-trash"></i>
+							</a>
+						</div>
+
+					</div>
+				</form>
+			</div>
+
+			<div class="row justify-content-between align-items-end px-0 mt-3">
+				<div class="col-auto px-0 ">
+					<a class="text-dark textBold" style="text-decoration: none">Credit Card</a>
+				</div>
+			</div>
+	
+			<div class="row bg-light">
+				<form method="post" th:action="@{/user/saveCreditCard}" th:object="${externalBankAccount}">
+
+					<div class="row px-5 py-4 align-items-center">
+
+						<div class="col-8">
+							<label>Credit Card Number</label>
+							<input type="text" class="form-control" th:field="*{creditCard.number}" required>
+							<input type="hidden" th:field="*{externalBankAccountId}" />
+							<input type="hidden" th:field="*{user}" />
+							<input type="hidden" th:field="*{bankAccount}" />
+							<input type="hidden" th:field="*{creditCard}" />
+						</div>
+
+						<div class="row mt-3">
+							<label>Expires end</label>
+							<div class="col-2">
+								<label>Month</label>
+								<input type="number" class="form-control" min=1 max=12 th:field="*{creditCard.expiresEndMonth}" required>
+							</div>
+
+							<div class="col-1 mt-4 px-4 py-1">
+								<a class="text-dark" style="text-decoration: none">/</a>
+							</div>
+	
+							<div class="col-2">
+								<label for="Year">Year</label>
+								<input type="number" class="form-control" id="Year" min=2023 max=2100 th:field="*{creditCard.expiresEndYear}" required>
+							</div>
+						</div>
+						
+						<div class="col-4 mt-3">
+							<label for="card_validation">Card Validation Value</label>
+							<div class="col-5">
+								<input type="number" class="form-control" id="card_validation" min=100 max=999 th:field="*{creditCard.validationValue}" required>
+							</div>
+						</div>
+						<div class="col-1 offset-6">
+							<label></label>
+							<button type="submit" class="btn btn-primary mt-4 px-2 textBold"><i class="bi bi-save"></i></button>
+						</div>
+						<div class="col-1 mt-4">
+							<label></label>
+							<a onclick="return confirm('Are you sure you want to delete your credit card ?')" class="btn btn-danger"
+	 							th:if="*{creditCard.creditCardId > 0}"
+	 							th:href="@{/user/deleteCreditCard(id=*{externalBankAccountId})}">
+								<i class="bi bi-trash"></i>
+							</a>
+						</div>
+
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

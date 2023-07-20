@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="template.html">
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="row textBold">
+			<div class="px-5 py-2 bg-light text-blue">
+				<a style="text-decoration:none">Home  /</a>
+			</div>
+		</div>
+	
+		<div class="row col-10 offset-1 mt-5 p-5 bg-light">
+			<div class="col-12 mb-3 text-center textBold">
+				<span th:text="'Welcome ' + ${user.firstName} + ' ' + ${user.lastName}"></span>
+			</div>
+			<div class="col-12 text-center textBold">
+				<label>Amount :</label>
+				<tr th:text="${#numbers.formatDecimal(amount, 1, 2)}"></tr>
+				<label>&euro;</label>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

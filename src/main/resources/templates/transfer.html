@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="template.html">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/style.css" />
+<title>Transfer</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="row textBold">
+			<div class="px-5 py-2 bg-light">
+				<a class="home" style="text-decoration: none">Home /</a>
+				<a class="page_transfer text-secondary" style="text-decoration: none">Transfer</a>
+			</div>
+		</div>
+
+		<div class="row col-10 offset-1">
+			<div class="row justify-content-between align-items-end px-0 mt-3 textBold">
+				<div class="col-auto px-0 ">
+					<a class="text-dark" style="text-decoration: none">Send Money</a>
+				</div>
+				<div class="col-3 px-0">
+					<form id="form_add_connection" th:action="@{/user/transfer/connection}" method="get">
+						<button class="btn btn-primary col-12 textBold">Add Connection</button>
+					</form> 
+				</div>
+			</div>
+
+			<div class="row bg-light">
+				<form method="post" th:action="@{/user/saveTransferMoney}" th:object="${transferMoneyDTO}">
+					<div class="row px-5 py-4">
+
+						<div class="row">Select A Connection</div>
+
+						<div class="row align-items-center justify-content-left px-0">
+							<div class="col-5">
+								<select class="form-control" th:field="*{userConnectionId}" id="selections">
+									<option th:each="p:*{listUserConnectionIdPseudoDTO}" th:value="${p.userConnectionId}" th:text="${p.pseudo}"></option>
+								</select>
+							</div>
+
+							<div class="col-3">
+								<input type="number" th:field="*{amount}" class="form-control border border-dark rounded-0 text-end"
+									name="number1" id="number1" min="1"/>
+							</div>
+	
+							<div class="col-1 text-center">
+								<label>&euro;</label>
+							</div>
+						</div>
+	
+						<!-- transfert à partir ou vers un compte externe -->
+						<div class="row mt-3 px-0" id="externalTransfer">
+							<div class="col-5">
+								<div class="col-12">
+									<input type="radio" id="choise1" th:field="*{transferFromExternal}" value="true">
+									<label for="choise1">From an external account</label>
+								</div>
+
+								<div class="col-12">
+									<input type="radio" id="choise2" th:field="*{transferFromExternal}" value="false">
+									<label for="choise2">To an external account</label>
+								</div>
+							</div>
+
+							<div class="col-4">
+								<div class="col-12" th:if="*{bankAccountIsPresent == true}">
+									<input type="radio" id="choise3" th:field="*{transferByBankAccount}" value="true">
+									<input type="hidden" id="bankAccountIsPresent" th:field="*{bankAccountIsPresent}" />
+									<label for="choise3">Bank account</label>
+								</div>
+
+								<div class="col-12" th:if="*{bankAccountIsPresent == false}">
+									<input type="radio" disabled>
+									<label for="choise3">Bank account</label>
+								</div>
+
+								<div class="col-12" th:if="*{creditCardIsPresent == true}">
+									<input type="radio" id="choise4" th:field="*{transferByBankAccount}" value="false">
+									<label for="choise4">Credit Card</label>
+								</div>
+
+								<div class="col-12" th:if="*{creditCardIsPresent == false}">
+									<input type="radio" disabled>
+									<label for="choise4">Credit Card</label>
+								</div>
+							</div>
+						</div>
+						<div class="row align-items-center justify-content-between px-0 mt-3">
+							<div class="col-9">
+								<input type="text" th:field="*{description}" class="form-control" placeholder="Description" max="50"/>
+							</div>
+							
+							<div class="col-3">
+								<button type="submit" class="btn btn-success col-12 textBold">Pay</button>
+							</div>
+						</div>
+
+						<div class="row align-items-center mt-3">
+							<div th:if="${errorMessage}" class="col-12 alert alert-danger text-center">
+							    <p th:text="${errorMessage}"></p>
+							</div>
+						</div>
+
+					</div>
+				</form>
+			</div>
+
+			<div class="row align-items-end px-0 mt-3">
+				<div class="col-auto px-0 ">
+					<a class="text-dark textBold" style="text-decoration: none">My Transactions</a>
+				</div>
+			</div>
+
+			<!-- tableau des transactions effectuées -->
+			<div class="row px-0 border border-dark">
+				<table class="table table-striped table-borderless">
+					<thead>
+						<tr class="text-center text-light" bgcolor="198754">
+							<th>Connections</th>
+							<th>Description</th>
+							<th>Amount</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="p:${listTransfer}">
+							<td th:text="${p.pseudo}" th:align="center"></td>
+							<td th:text="${p.description}" th:align="center"></td>
+							<td th:text="${p.amount} + ' &euro;'" th:align="center"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<!-- boutons pour changer de pages -->
+			<div class="row justify-content-center" th:if="${pages.length} > 1">
+				<ul class="nav nav-pills col-auto px-0">
+					<li th:each="page,status:${pages}">
+						<a th:class="${status.index==currentPage?'btn btn-primary ms-1':'btn btn-outline-primary ms-1'}"
+						th:href="@{/user/transfer(page=${status.index})}"
+						th:text="${status.index} + 1"></a></li>
+				</ul>
+			</div>
+
+		</div>
+
+		<script type="text/javascript" src="/webjars/jquery/3.6.4/jquery.min.js"></script>
+
+		<!-- scripte pour afficher ou cacher les boutons radios pour
+			 les transferts externes -->
+		<script type="text/javascript">$("select").on("change", function () {
+//			alert("Script: select on change");
+			var str = "";
+			$("select option:selected").each(function () {
+				str += $(this).text();
+//				alert("str = " + "'" + str + "'");
+			});
+
+			if (str.indexOf("Me") == 0 && str.length == 2) {
+				$("#externalTransfer").show();
+//				alert("externalTransfer.show()");
+
+				if ($("#bankAccountIsPresent").val() == 'true') {
+					$("#choise3").prop('checked', true);
+//					alert("bankAccountIsPresent = true");
+				}
+			}
+			else {
+				$("#externalTransfer").hide();
+//				alert("externalTransfer.hide()");
+			}
+			//alert(str + ": indexOf = " + str.indexOf("Me"));
+
+			})
+			.trigger("change");
+		</script>
+	</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<!--
+<title>Pay My Buddy</title>
+-->
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="stylesheet"
+	href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="/webjars/bootstrap-icons/1.10.3/font/bootstrap-icons.css">
+<script src="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+	<div class="row mt">
+		<div class="col-md-12 py-2 text-center text-white bg-dark">
+			<h6>Pay My Buddy</h6>
+		</div>
+	</div>
+	<!-- Grey with black text -->
+	<nav class="navbar navbar-expand-sm">
+		<div class="container-fluid">
+			<ul class="navbar-nav">
+				<li>
+					<div class="py-2 align-items-center bg-success rounded" style="width: 135px">
+						<div class="text-white text-center textBold">
+							Pay My Buddy
+						</div>
+					</div>
+				</li>
+			</ul>
+			<ul class="navbar-nav textBold">
+				<li class="nav-item">
+					<a class="nav-link" th:style="${menu == 'homeUser' ? 'color: blue;' : 'color: black;'}"
+						th:href="@{/user/homeUser}">Home</a></li>
+				<li class="nav-item">
+					<a class="nav-link" th:style="${menu == 'transfer' ? 'color: blue;' : 'color: black;'}"
+						th:href="@{/user/transfer}">Transfer</a></li>
+				<li class="nav-item">
+					<a class="nav-link" th:style="${menu == 'profile' ? 'color: blue;' : 'color: black;'}"
+						th:href="@{/user/profile}">Profile</a></li>
+				<li class="nav-item">
+					<a class="nav-link" th:style="${menu == 'contact' ? 'color: blue;' : 'color: black;'}"
+						th:href="@{/user/contact}">Contact</a></li>
+				<li class="nav-item">
+					<a class="nav-link active"
+						th:href="@{/logoff}">Log off</a></li>
+			</ul>
+		</div>
+	</nav>
+	
+	<div layout:fragment="content"></div>
+
+</body>
+</html>

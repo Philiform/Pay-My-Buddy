@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="template.html">
+<head>
+<meta charset="UTF-8">
+<title>Contacts</title>
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="row textBold">
+			<div class="px-5 py-2 bg-light text-blue">
+				<a class="home" style="text-decoration:none">Home  /</a>
+				<a class="page_contact text-secondary" style="text-decoration:none">Contact</a>
+			</div>
+		</div>
+	
+		<div class="row col-10 offset-1">
+			<div class="row justify-content-between align-items-end px-0 mt-3">
+				<div class="col-auto px-0 ">
+					<a class="text-dark textBold" style="text-decoration: none">Contact</a>
+				</div>
+			</div>
+	
+			<div class="row bg-light">
+				<form method="post" action="mailto:destinataire@email.com" enctype="text/plain">
+					<div class="row px-5 py-4 align-items-center">
+						<div class="col-12 m-3">
+							<label for="Message">Message</label><br />
+							<textarea name="Message" rows="12" cols="80"></textarea>
+						</div>
+						<div class="col-2 offset-5">
+							<button type="submit" class="btn btn-primary mt-4 px-4 textBold">Send</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
