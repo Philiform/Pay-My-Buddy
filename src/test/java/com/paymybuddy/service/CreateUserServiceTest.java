@@ -29,34 +29,60 @@ import com.paymybuddy.repository.RoleRepository;
 import com.paymybuddy.repository.UserRepository;
 import com.paymybuddy.service.dto.NewUserDTO;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CreateUserServiceTest.
+ */
 @ExtendWith(MockitoExtension.class)
 class CreateUserServiceTest {
 
+	/** The service. */
 	@InjectMocks
 	private CreateUserService service;
 
+	/** The user repository. */
 	@Mock
 	private UserRepository userRepository;
 
+	/** The external bank account repository. */
 	@Mock
 	private ExternalBankAccountRepository externalBankAccountRepository;
 
+	/** The internal bank account repository. */
 	@Mock
 	private InternalBankAccountRepository internalBankAccountRepository;
 
+	/** The role repository. */
 	@Mock
 	private RoleRepository roleRepository;
 
+	/** The password encoder. */
 	@Mock
 	public PasswordEncoder passwordEncoder;
 
+	/** The new user DTO. */
 	private NewUserDTO newUserDTO;
+	
+	/** The user 1. */
 	private User user1;
+	
+	/** The external bank account. */
 	private ExternalBankAccount externalBankAccount;
+	
+	/** The internal bank account. */
 	private InternalBankAccount internalBankAccount;
+	
+	/** The user connection. */
 	private UserConnection userConnection;
+	
+	/** The role. */
 	private Role role;
 
+	/**
+	 * Sets the up.
+	 *
+	 * @throws Exception the exception
+	 */
 	@BeforeEach
 	void setUp() throws Exception {
 		user1 = new User();
@@ -93,6 +119,9 @@ class CreateUserServiceTest {
 		newUserDTO.setMatchingPassword("123456");
 	}
 
+	/**
+	 * Test new user DT O when save new user then return response for operation OK.
+	 */
 	@Test
 	void testNewUserDTO_WhenSaveNewUser_ThenReturnResponseForOperation_OK() {
 		given(userRepository.findByEmailNotDeleted(anyString())).willReturn(Optional.empty());
@@ -111,6 +140,9 @@ class CreateUserServiceTest {
 		assertThat(response).isEqualTo(ResponseForOperation.OK);
 	}
 
+	/**
+	 * Test email already exist when save new user then return response for operation EMAI L MUS T B E CHANGED.
+	 */
 	@Test
 	void testEmailAlreadyExist_WhenSaveNewUser_ThenReturnResponseForOperation_EMAIL_MUST_BE_CHANGED() {
 		given(userRepository.findByEmailNotDeleted(anyString())).willReturn(Optional.of(user1));
@@ -121,6 +153,9 @@ class CreateUserServiceTest {
 		assertThat(response).isEqualTo(ResponseForOperation.EMAIL_MUST_BE_CHANGED);
 	}
 
+	/**
+	 * Test password different matching password when save new user then return response for operation ERRO R CONFIR M PASSWORD.
+	 */
 	@Test
 	void testPasswordDifferentMatchingPassword_WhenSaveNewUser_ThenReturnResponseForOperation_ERROR_CONFIRM_PASSWORD() {
 		given(userRepository.findByEmailNotDeleted(anyString())).willReturn(Optional.empty());
@@ -133,6 +168,9 @@ class CreateUserServiceTest {
 		assertThat(response).isEqualTo(ResponseForOperation.ERROR_CONFIRM_PASSWORD);
 	}
 
+	/**
+	 * Test exception when save new user then return response for operation ERROR.
+	 */
 	@Test
 	void testException_WhenSaveNewUser_ThenReturnResponseForOperation_ERROR() {
 		given(userRepository.findByEmailNotDeleted(anyString())).willReturn(Optional.empty());

@@ -23,24 +23,41 @@ import com.paymybuddy.model.User;
 import com.paymybuddy.repository.UserRepository;
 import com.paymybuddy.security.UserConnected;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class HomeControllerTest.
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 class HomeControllerTest {
 
+	/** The controller. */
 	@Autowired
 	private HomeController controller;
 
+	/** The mock mvc. */
 	@Autowired
 	private MockMvc mockMvc;
 
+	/** The repository. */
 	@MockBean
 	private UserRepository repository;
 
+	/**
+	 * Test given controller then return not null.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGivenController_ThenReturnNotNull() throws Exception {
 		assertThat(controller).isNotNull();
 	}
 
+	/**
+	 * Test given good role when get end point home admin then return ok.
+	 *
+	 * @throws Exception the exception
+	 */
 	@WithMockUser(roles = {"ADMIN"})
 	@Test
 	public void testGivenGoodRole_WhenGetEndPointHomeAdmin_ThenReturnOk() throws Exception {
@@ -51,6 +68,11 @@ class HomeControllerTest {
 			.andExpect(model().attributeExists("commission"));
 	}
 
+	/**
+	 * Test given good role when get end point home accounting then return ok.
+	 *
+	 * @throws Exception the exception
+	 */
 	@WithMockUser(roles = {"ACCOUNTING"})
 	@Test
 	public void testGivenGoodRole_WhenGetEndPointHomeAccounting_ThenReturnOk() throws Exception {
@@ -60,6 +82,11 @@ class HomeControllerTest {
 			.andExpect(view().name("homeAccounting"));
 	}
 
+	/**
+	 * Test given good role when get end point home user then return ok.
+	 *
+	 * @throws Exception the exception
+	 */
 	@WithMockUser(username = "c@email.com", password = "123456", roles = {"USER"})
 	@Test
 	public void testGivenGoodRole_WhenGetEndPointHomeUser_ThenReturnOk() throws Exception {
@@ -87,6 +114,11 @@ class HomeControllerTest {
 		verify(repository, times(1)).findProfileByUserId(any(Integer.class));
 	}
 
+	/**
+	 * Test given bad role when get end point home admin then return forbidden.
+	 *
+	 * @throws Exception the exception
+	 */
 	@WithMockUser(roles = {"USER"})
 	@Test
 	public void testGivenBadRole_WhenGetEndPointHomeAdmin_ThenReturnForbidden() throws Exception {

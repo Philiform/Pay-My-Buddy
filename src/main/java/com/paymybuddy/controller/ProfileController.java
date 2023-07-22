@@ -21,13 +21,22 @@ import com.paymybuddy.service.dto.ProfileDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
+// TODO: Auto-generated Javadoc
+/** The Constant log. */
 @Slf4j
 @Controller
 public class ProfileController {
 
+	/** The service. */
 	@Autowired
 	private ProfileService service;
 
+	/**
+	 * Home.
+	 *
+	 * @param model the model
+	 * @return HTML page
+	 */
 	@GetMapping("/user/profile")
 	public String profile(Model model) {
 		log.info("profile");
@@ -70,6 +79,14 @@ public class ProfileController {
 		return "profile";
 	}
 
+	/**
+	 * Save profile.
+	 *
+	 * @param profileDTO the profile DTO
+	 * @param model the model
+	 * @param bindingResult the binding result
+	 * @return HTML page
+	 */
 	@PostMapping("/user/saveProfile")
 	public String saveProfile(@ModelAttribute ProfileDTO profileDTO, Model model, BindingResult bindingResult) {
 		log.info("saveProfile");
@@ -90,6 +107,14 @@ public class ProfileController {
 		return "redirect:/user/profile";
 	}
 
+	/**
+	 * Save bank account.
+	 *
+	 * @param externalBankAccount the external bank account
+	 * @param model the model
+	 * @param bindingResult the binding result
+	 * @return HTML page
+	 */
 	@PostMapping("/user/saveBankAccount")
 	public String saveBankAccount(@ModelAttribute ExternalBankAccount externalBankAccount, Model model, BindingResult bindingResult) {
 		log.info("saveBankAccount");
@@ -109,6 +134,14 @@ public class ProfileController {
 		return "redirect:/user/profile";
 	}
 
+	/**
+	 * Save credit card.
+	 *
+	 * @param externalBankAccount the external bank account
+	 * @param model the model
+	 * @param bindingResult the binding result
+	 * @return HTML page
+	 */
 	@PostMapping("/user/saveCreditCard")
 	public String saveCreditCard(@ModelAttribute ExternalBankAccount externalBankAccount, Model model, BindingResult bindingResult) {
 		log.info("saveCreditCard");
@@ -128,6 +161,11 @@ public class ProfileController {
 		return "redirect:/user/profile";
 	}
 
+	/**
+	 * Delete profile.
+	 *
+	 * @return HTML page
+	 */
 	@GetMapping("/user/deleteProfile")
 	public String deleteProfile() {
 		log.info("deleteProfile");
@@ -143,6 +181,12 @@ public class ProfileController {
 		return "redirect:/login";
 	}
 
+	/**
+	 * Delete bank account.
+	 *
+	 * @param externalBankAccountId the external bank account id
+	 * @return HTML page
+	 */
 	@GetMapping("/user/deleteBankAccount")
 	public String deleteBankAccount(@RequestParam(name = "id") int externalBankAccountId) {
 		log.info("deleteBankAccount");
@@ -158,6 +202,12 @@ public class ProfileController {
 		return "redirect:/user/profile";
 	}
 
+	/**
+	 * Delete credit card.
+	 *
+	 * @param externalBankAccountId the external bank account id
+	 * @return HTML page
+	 */
 	@GetMapping("/user/deleteCreditCard")
 	public String deleteCreditCard(@RequestParam(name = "id") int externalBankAccountId) {
 		log.info("deleteCreditCard");

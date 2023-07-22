@@ -20,23 +20,44 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Hash code.
+ *
+ * @return the int
+ */
 @Data
+
+/**
+ * Instantiates a new role.
+ */
 @NoArgsConstructor
+
+/**
+ * Instantiates a new role.
+ *
+ * @param roleId the role id
+ * @param role the role
+ * @param users the users
+ */
 @AllArgsConstructor
 @Entity
 @JsonIgnoreProperties("users")
 @Table(name = "role")
 public class Role {
 
+	/** The role id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "role_id")
 	private int roleId;
 
+	/** The role. */
 	@Column(name = "role", unique = true)
 	@Size(min = 4, max = 20)
 	private String role;
 
+	/** The users. */
 	@JsonIgnore
 	@ManyToMany(
 			fetch = FetchType.EAGER,
@@ -47,6 +68,11 @@ public class Role {
 			})
 	private List<User> users = new ArrayList<>();
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		return "[ roleId = " + roleId + ", " +

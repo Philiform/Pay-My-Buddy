@@ -17,22 +17,38 @@ import com.paymybuddy.model.InternalBankAccount;
 import com.paymybuddy.model.User;
 import com.paymybuddy.repository.InternalBankAccountRepository;
 
+// TODO: Auto-generated Javadoc
 //import lombok.extern.slf4j.Slf4j;
 
+/**
+ * The Class HomeServiceTest.
+ */
 //@Slf4j
 @ExtendWith(MockitoExtension.class)
 class HomeServiceTest {
 
+	/** The service. */
 	@InjectMocks
 	private HomeService service;
 
+	/** The internal bank account repository. */
 	@Mock
 	private InternalBankAccountRepository internalBankAccountRepository;
 
+	/** The amount. */
 	private float amount = (float) 123.45;
+	
+	/** The user 1. */
 	private User user1;
+	
+	/** The internal bank account. */
 	private InternalBankAccount internalBankAccount;
 
+	/**
+	 * Sets the up.
+	 *
+	 * @throws Exception the exception
+	 */
 	@BeforeEach
 	void setUp() throws Exception {
 		user1 = new User();
@@ -46,6 +62,9 @@ class HomeServiceTest {
 
 	}
 
+	/**
+	 * Test amount when get amount by user id then return amount.
+	 */
 	@Test
 	void testAmount_WhenGetAmountByUserId_ThenReturnAmount() {
 		given(internalBankAccountRepository.findAmountByUserId(any(Integer.class))).willReturn(amount);
@@ -56,6 +75,9 @@ class HomeServiceTest {
 		assertThat(response).isEqualTo(amount);
 	}
 
+	/**
+	 * Test exception when get amount by user id then return 0.
+	 */
 	@Test
 	void testException_WhenGetAmountByUserId_ThenReturn0() {
 		given(internalBankAccountRepository.findAmountByUserId(any(Integer.class))).willAnswer(invocation -> {throw new Exception();});

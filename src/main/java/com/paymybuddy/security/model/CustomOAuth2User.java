@@ -14,15 +14,28 @@ import com.paymybuddy.model.User;
 
 import lombok.extern.slf4j.Slf4j;
 
+// TODO: Auto-generated Javadoc
+/** The Constant log. */
 @Slf4j
 public class CustomOAuth2User implements OAuth2User {
 
+	/** The user. */
 	private User user;
 
+	/**
+	 * Instantiates a new custom OAuth2 user.
+	 *
+	 * @param user the user
+	 */
 	public CustomOAuth2User(User user) {
 		this.user = user;
 	}
 
+	/**
+	 * Gets the attributes.
+	 *
+	 * @return the attributes
+	 */
 	@Override
 	public Map<String, Object> getAttributes() {
 		log.debug("==> F:getAttributes");
@@ -30,6 +43,11 @@ public class CustomOAuth2User implements OAuth2User {
 		return new HashMap<String, Object>();
 	}
 
+	/**
+	 * Gets the authorities.
+	 *
+	 * @return the authorities
+	 */
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		log.debug("==> F:getAuthorities");
@@ -44,6 +62,11 @@ public class CustomOAuth2User implements OAuth2User {
 		return listGrantedAuthority;
 	}
 
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
 	@Override
 	public String getName() {
 		log.debug("==> F:getName");

@@ -13,20 +13,34 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import com.paymybuddy.model.User;
 import com.paymybuddy.model.UserConnection;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class UserConnectionRepositoryTest.
+ */
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class UserConnectionRepositoryTest {
 
+	/** The user connection. */
 	private UserConnection userConnection;
+
+	/** The user sender. */
 	private User userSender;
+
+	/** The user recipient. */
 	private User userRecipient;
 
+	/** The entity manager. */
 	@Autowired
 	private TestEntityManager entityManager;
 
+	/** The repository. */
 	@Autowired
 	private UserConnectionRepository repository;
 
+	/**
+	 * Sets the up.
+	 */
 	@BeforeEach
 	void setUp() {
 		userConnection = new UserConnection();
@@ -47,6 +61,9 @@ public class UserConnectionRepositoryTest {
 		userConnection.setDeleted(false);
 	}
 
+	/**
+	 * Test given new user when save user then return new user.
+	 */
 	@Test
 	public void testGivenNewUser_WhenSaveUser_ThenReturnNewUser() {
 		UserConnection saveUserConnection = repository.save(userConnection);

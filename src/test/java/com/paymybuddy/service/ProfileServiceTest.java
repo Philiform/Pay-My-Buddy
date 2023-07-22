@@ -33,41 +33,76 @@ import com.paymybuddy.repository.UserRepository;
 import com.paymybuddy.security.UserConnected;
 import com.paymybuddy.service.dto.ProfileDTO;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ProfileServiceTest.
+ */
 @ExtendWith(MockitoExtension.class)
 class ProfileServiceTest {
 
+	/** The service. */
 	@InjectMocks
 	private ProfileService service;
 
+	/** The user repository. */
 	@Mock
 	private UserRepository userRepository;
 
+	/** The external bank account repository. */
 	@Mock
 	private ExternalBankAccountRepository externalBankAccountRepository;
 
+	/** The internal bank account repository. */
 	@Mock
 	private InternalBankAccountRepository internalBankAccountRepository;
 
+	/** The bank account repository. */
 	@Mock
 	private BankAccountRepository bankAccountRepository;
 
+	/** The credit card repository. */
 	@Mock
 	private CreditCardRepository creditCardRepository;
 
+	/** The user connection repository. */
 	@Mock
 	private UserConnectionRepository userConnectionRepository;
 
+	/** The profile DTO. */
 	private ProfileDTO profileDTO;
+	
+	/** The profile. */
 	private String profile;
+	
+	/** The user 1. */
 	private User user1;
+	
+	/** The external bank account. */
 	private ExternalBankAccount externalBankAccount;
+	
+	/** The internal bank account. */
 	private InternalBankAccount internalBankAccount;
+	
+	/** The user connection. */
 	private UserConnection userConnection;
+	
+	/** The bank account. */
 	private BankAccount bankAccount;
+	
+	/** The credit card. */
 	private CreditCard creditCard;
+	
+	/** The role. */
 	private Role role;
+	
+	/** The list user connection. */
 	private List<UserConnection> listUserConnection;
 
+	/**
+	 * Sets the up.
+	 *
+	 * @throws Exception the exception
+	 */
 	@BeforeEach
 	void setUp() throws Exception {
 		user1 = new User();
@@ -120,6 +155,9 @@ class ProfileServiceTest {
 		externalBankAccount.setCreditCard(creditCard);
 	}
 
+	/**
+	 * Test profile DT O when get profile by user id then return optional profile DTO.
+	 */
 	// Profile
 	@Test
 	void testProfileDTO_WhenGetProfileByUserId_ThenReturnOptionalProfileDTO() {
@@ -131,6 +169,9 @@ class ProfileServiceTest {
 		assertThat(response).isEqualTo(Optional.of(profileDTO));
 	}
 
+	/**
+	 * Test user unknow when get profile by user id then return optional empty.
+	 */
 	@Test
 	void testUserUnknow_WhenGetProfileByUserId_ThenReturnOptionalEmpty() {
 		given(userRepository.findProfileByUserId(any(Integer.class))).willReturn("");
@@ -141,6 +182,9 @@ class ProfileServiceTest {
 		assertThat(response).isEqualTo(Optional.empty());
 	}
 
+	/**
+	 * Test exception when get profile by user id then return optional empty.
+	 */
 	@Test
 	void testException_WhenGetProfileByUserId_ThenReturnOptionalEmpty() {
 		given(userRepository.findProfileByUserId(any(Integer.class))).willAnswer(invocation -> {throw new Exception();});
@@ -151,6 +195,9 @@ class ProfileServiceTest {
 		assertThat(response).isEqualTo(Optional.empty());
 	}
 
+	/**
+	 * Test profile DT O when save profile then return optional profile DTO.
+	 */
 	@Test
 	void testProfileDTO_WhenSaveProfile_ThenReturnOptionalProfileDTO() {
 		given(userRepository.findProfileByUserId(any(Integer.class))).willReturn(profile);
@@ -161,6 +208,9 @@ class ProfileServiceTest {
 		assertThat(response).isEqualTo(Optional.of(profileDTO));
 	}
 
+	/**
+	 * Test profile when delete profile then delete profile.
+	 */
 	@Test
 	void testProfile_WhenDeleteProfile_ThenDeleteProfile() {
 		given(userConnectionRepository.findToDelete(any(Integer.class))).willReturn(listUserConnection);
@@ -186,6 +236,9 @@ class ProfileServiceTest {
 		verify(userRepository, times(1)).save(any());
 	}
 
+	/**
+	 * Test external bank account when get external bank account by user id then return optional external bank account.
+	 */
 	// ExternalBankAccount
 	@Test
 	void testExternalBankAccount_WhenGetExternalBankAccountByUserId_ThenReturnOptionalExternalBankAccount() {
@@ -197,6 +250,9 @@ class ProfileServiceTest {
 		assertThat(response).isEqualTo(Optional.of(externalBankAccount));
 	}
 
+	/**
+	 * Test external bank account unknow when get external bank account by user id then return optional empty.
+	 */
 	@Test
 	void testExternalBankAccountUnknow_WhenGetExternalBankAccountByUserId_ThenReturnOptionalEmpty() {
 		given(externalBankAccountRepository.findByUserId(any(Integer.class))).willReturn(Optional.empty());
@@ -207,6 +263,9 @@ class ProfileServiceTest {
 		assertThat(response).isEqualTo(Optional.empty());
 	}
 
+	/**
+	 * Test bank account id is 0 when save bank account then return optional bank account.
+	 */
 	// BankAccount
 	@Test
 	void testBankAccountIdIs0_WhenSaveBankAccount_ThenReturnOptionalBankAccount() {
@@ -222,6 +281,9 @@ class ProfileServiceTest {
 		assertThat(response).isEqualTo(Optional.of(bankAccount));
 	}
 
+	/**
+	 * Test exception when save bank account then return optional empty.
+	 */
 	@Test
 	void testException_WhenSaveBankAccount_ThenReturnOptionalEmpty() {
 		given(bankAccountRepository.save(any())).willAnswer(invocation -> {throw new Exception();});
@@ -232,6 +294,9 @@ class ProfileServiceTest {
 		assertThat(response).isEqualTo(Optional.empty());
 	}
 
+	/**
+	 * Test bank account when delete bank account then delete bank account.
+	 */
 	@Test
 	void testBankAccount_WhenDeleteBankAccount_ThenDeleteBankAccount() {
 		given(externalBankAccountRepository.findById(any(Integer.class))).willReturn(Optional.of(externalBankAccount));
@@ -245,6 +310,9 @@ class ProfileServiceTest {
 		verify(externalBankAccountRepository, times(1)).save(any());
 	}
 
+	/**
+	 * Test credit card id is 0 when save credit card then return optional.
+	 */
 	// CreditCard
 	@Test
 	void testCreditCardIdIs0_WhenSaveCreditCard_ThenReturnOptional() {
@@ -260,6 +328,9 @@ class ProfileServiceTest {
 		assertThat(response).isEqualTo(Optional.of(creditCard));
 	}
 
+	/**
+	 * Test exception when save credit card then return optional empty.
+	 */
 	@Test
 	void testException_WhenSaveCreditCard_ThenReturnOptionalEmpty() {
 		given(creditCardRepository.save(any())).willAnswer(invocation -> {throw new Exception();});
@@ -270,6 +341,9 @@ class ProfileServiceTest {
 		assertThat(response).isEqualTo(Optional.empty());
 	}
 
+	/**
+	 * Test credit card when delete credit card then delete credit card.
+	 */
 	@Test
 	void testCreditCard_WhenDeleteCreditCard_ThenDeleteCreditCard() {
 

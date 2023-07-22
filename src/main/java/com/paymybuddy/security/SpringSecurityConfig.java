@@ -11,15 +11,29 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.paymybuddy.security.service.CustomOAuth2UserService;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SpringSecurityConfig.
+ */
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
+
+	/** The login success handler. */
 	@Autowired
 	private LoginSuccessHandler loginSuccessHandler;
 
+	/** The user OAuth service. */
 	@Autowired
 	private CustomOAuth2UserService userOAuthService;
 
+	/**
+	 * Security filter chain.
+	 *
+	 * @param http the http
+	 * @return the security filter chain
+	 * @throws Exception the exception
+	 */
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 //		System.out.println("nouveau mot de passe (000000) = " + passwordEncoder().encode("000000"));
@@ -65,6 +79,11 @@ public class SpringSecurityConfig {
 		return http.build();
 	}
 
+	/**
+	 * Password encoder.
+	 *
+	 * @return the password encoder
+	 */
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

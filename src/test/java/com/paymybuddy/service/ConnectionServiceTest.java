@@ -29,36 +29,78 @@ import com.paymybuddy.repository.UserConnectionRepository;
 import com.paymybuddy.repository.UserRepository;
 import com.paymybuddy.service.dto.EmailUserConnectionDTO;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ConnectionServiceTest.
+ */
 @ExtendWith(MockitoExtension.class)
 class ConnectionServiceTest {
 
+	/** The service. */
 	@InjectMocks
 	private ConnectionService service;
 
+	/** The user connection repository. */
 	@Mock
 	private UserConnectionRepository userConnectionRepository;
 
+	/** The user repository. */
 	@Mock
 	private UserRepository userRepository;
 
+	/** The page email user connection DTO. */
 	private Page<EmailUserConnectionDTO> pageEmailUserConnectionDTO;
+	
+	/** The list DTO. */
 	private List<EmailUserConnectionDTO> listDTO;
+	
+	/** The email user connection DTO 1. */
 	private EmailUserConnectionDTO emailUserConnectionDTO1;
+	
+	/** The email user connection DTO 2. */
 	private EmailUserConnectionDTO emailUserConnectionDTO2;
+	
+	/** The email user connection DTO 3. */
 	private EmailUserConnectionDTO emailUserConnectionDTO3;
+	
+	/** The list user connection. */
 	private List<UserConnection> listUserConnection;
+	
+	/** The user 1. */
 	private User user1;
+	
+	/** The user 2. */
 	private User user2;
+	
+	/** The user 3. */
 	private User user3;
+	
+	/** The user connection 1. */
 	private UserConnection userConnection1;
+	
+	/** The user connection 2. */
 	private UserConnection userConnection2;
+	
+	/** The user connection 3. */
 	private UserConnection userConnection3;
+	
+	/** The role. */
 	private Role role;
 
+	/** The page email user connection DTO empty. */
 	private Page<EmailUserConnectionDTO> pageEmailUserConnectionDTOEmpty;
+	
+	/** The list DTO empty. */
 	private List<EmailUserConnectionDTO> listDTOEmpty;
+	
+	/** The list user connection empty. */
 	private List<UserConnection> listUserConnectionEmpty;
 
+	/**
+	 * Sets the up.
+	 *
+	 * @throws Exception the exception
+	 */
 	@BeforeEach
 	void setUp() throws Exception {
 		user1 = new User();
@@ -128,6 +170,9 @@ class ConnectionServiceTest {
 		listUserConnectionEmpty = new ArrayList<>();
 	}
 
+	/**
+	 * Test user sender is 1 when get list email and pseudo by user sender then return page email user connection DTO.
+	 */
 	@Test
 	void testUserSenderIs1_WhenGetListEmailAndPseudoByUserSender_ThenReturnPageEmailUserConnectionDTO() {
 		given(userConnectionRepository.findByUserSenderNotDeleted(any(Integer.class))).willReturn(listUserConnection);
@@ -143,6 +188,9 @@ class ConnectionServiceTest {
 		assertThat(response.getContent()).isEqualTo(pageEmailUserConnectionDTO.getContent());
 	}
 
+	/**
+	 * Test user sender is 2 when get list email and pseudo by user sender then return page email user connection DTO empty.
+	 */
 	@Test
 	void testUserSenderIs2_WhenGetListEmailAndPseudoByUserSender_ThenReturnPageEmailUserConnectionDTOEmpty() {
 		given(userConnectionRepository.findByUserSenderNotDeleted(any(Integer.class))).willReturn(listUserConnectionEmpty);
@@ -153,6 +201,9 @@ class ConnectionServiceTest {
 		assertThat(response.getContent()).isEqualTo(pageEmailUserConnectionDTOEmpty.getContent());
 	}
 
+	/**
+	 * Test email user connection DT O when save connection then return response for operation OK.
+	 */
 	@Test
 	void testEmailUserConnectionDTO_WhenSaveConnection_ThenReturnResponseForOperation_OK() {
 		given(userRepository.findByEmail(any())).willReturn(Optional.of(user3));
@@ -172,6 +223,9 @@ class ConnectionServiceTest {
 		assertThat(response).isEqualTo(ResponseForOperation.OK);
 	}
 
+	/**
+	 * Test bad role when save connection then return response for operation EMAI L INVALID.
+	 */
 	@Test
 	void testBadRole_WhenSaveConnection_ThenReturnResponseForOperation_EMAIL_INVALID() {
 		given(userRepository.findByEmail(any())).willReturn(Optional.of(user3));
@@ -184,6 +238,9 @@ class ConnectionServiceTest {
 		assertThat(response).isEqualTo(ResponseForOperation.EMAIL_INVALID);
 	}
 
+	/**
+	 * Test pseudo is empty when save connection then return response for operation PSEUD O I S EMPTY.
+	 */
 	@Test
 	void testPseudoIsEmpty_WhenSaveConnection_ThenReturnResponseForOperation_PSEUDO_IS_EMPTY() {
 		given(userRepository.findByEmail(any())).willReturn(Optional.of(user3));
@@ -196,6 +253,9 @@ class ConnectionServiceTest {
 		assertThat(response).isEqualTo(ResponseForOperation.PSEUDO_IS_EMPTY);
 	}
 
+	/**
+	 * Test exception when save connection then return response for operation ERROR.
+	 */
 	@Test
 	void testException_WhenSaveConnection_ThenReturnResponseForOperation_ERROR() {
 		given(userRepository.findByEmail(any())).willReturn(Optional.of(user3));
@@ -210,6 +270,9 @@ class ConnectionServiceTest {
 		assertThat(response).isEqualTo(ResponseForOperation.ERROR);
 	}
 
+	/**
+	 * Test user connection is 2 when delete connection then delete.
+	 */
 	@Test
 	void testUserConnectionIs2_WhenDeleteConnection_ThenDelete() {
 		given(userConnectionRepository.findById(any())).willReturn(Optional.of(userConnection2));
@@ -223,6 +286,9 @@ class ConnectionServiceTest {
 		verify(userConnectionRepository, times(1)).save(any());
 	}
 
+	/**
+	 * Test user connection unknow when delete connection then no delete.
+	 */
 	@Test
 	void testUserConnectionUnknow_WhenDeleteConnection_ThenNoDelete() {
 		given(userConnectionRepository.findById(any())).willReturn(Optional.empty());

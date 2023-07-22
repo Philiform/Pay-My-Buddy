@@ -32,26 +32,40 @@ import com.paymybuddy.service.dto.TransferTableDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
+// TODO: Auto-generated Javadoc
+/** The Constant log. */
 @Slf4j
 @Transactional
 @Service
 public class TransferService {
 
+	/** The user connection repository. */
 	@Autowired
 	private UserConnectionRepository userConnectionRepository;
 
+	/** The money transfer repository. */
 	@Autowired
 	private MoneyTransferRepository moneyTransferRepository;
 
+	/** The rate repository. */
 	@Autowired
 	private RateRepository rateRepository;
 
+	/** The internal bank account repository. */
 	@Autowired
 	private InternalBankAccountRepository internalBankAccountRepository;
 
+	/** The external bank account repository. */
 	@Autowired
 	private ExternalBankAccountRepository externalBankAccountRepository;
 
+	/**
+	 * Gets the transfer by user sender.
+	 *
+	 * @param userSender the user sender
+	 * @param pageable the pageable
+	 * @return the transfer by user sender
+	 */
 	public Page<TransferTableDTO> getTransferByUserSender(final int userSender, final Pageable pageable) {
 		List<TransferTableDTO> listDTO = new ArrayList<>();
 
@@ -107,6 +121,12 @@ public class TransferService {
 		return new PageImpl<TransferTableDTO>(listDTO);
 	}
 
+	/**
+	 * Gets the new transfer DTO.
+	 *
+	 * @param userSender the user sender
+	 * @return the new transfer DTO
+	 */
 	public TransferMoneyDTO getNewTransferDTO(final int userSender) {
 		List<UserConnection> listUserConnection = new ArrayList<>();
 		TransferMoneyDTO transferMoneyDTO = new TransferMoneyDTO();
@@ -140,6 +160,14 @@ public class TransferService {
 
 		return transferMoneyDTO;
 	}
+
+	/**
+	 * Save transfer money.
+	 *
+	 * @param transferMoneyDTO the transfer money DTO
+	 * @param userId the user id
+	 * @return the response for operation
+	 */
 	public ResponseForOperation saveTransferMoney(TransferMoneyDTO transferMoneyDTO, int userId) {
 		try {
 //			if(Optional.of(transferMoneyDTO.getUserConnectionId()).isEmpty() || transferMoneyDTO.getAmount() < 1) {
@@ -180,7 +208,9 @@ public class TransferService {
 			if(isTransferExterne) {
 				rate = rateRepository.findById(1).get();
 				amountForSender = transferMoneyDTO.getAmount();
-			} else {
+			}
+			// SINON appliquer la commission au transfert d'argent
+			else {
 				rate = rateRepository.findLastRate();
 				commission = (float) (Math.round(transferMoneyDTO.getAmount() * rate.getRate() * 100.0) / 100.0);
 				amountForSender = (float) (Math.round((transferMoneyDTO.getAmount() + commission) * 100.0) / 100.0);
@@ -229,7 +259,7 @@ public class TransferService {
 
 			// SI c'est une transaction externe
 			if(isTransferExterne) {
-				// définir le type de transfert externe
+				// définir le sens du transfert externe: A PARTIR ou VERS
 				if(transferMoneyDTO.isTransferFromExternal()) {
 					log.debug("transaction: credit");
 
@@ -244,7 +274,7 @@ public class TransferService {
 					amountForSender *= -1;
 				}
 
-				// définir le moyen utilisé pour le transfert externe
+				// définir le moyen utilisé pour le transfert externe: COMPTE BANCAIRE ou CARTE DE CREDIT
 				if(transferMoneyDTO.isTransferByBankAccount()) {
 					log.debug("transaction by bank account");
 

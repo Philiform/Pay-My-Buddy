@@ -17,13 +17,23 @@ import com.paymybuddy.security.model.CustomOAuth2User;
 
 import lombok.extern.slf4j.Slf4j;
 
+// TODO: Auto-generated Javadoc
+/** The Constant log. */
 @Slf4j
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
+	/** The repository. */
 	@Autowired
 	private UserRepository repository;
 
+	/**
+	 * Load user.
+	 *
+	 * @param userRequest the user request
+	 * @return the OAuth2 user
+	 * @throws OAuth2AuthenticationException the OAuth2 authentication exception
+	 */
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 		log.debug("==> F:loadUser");

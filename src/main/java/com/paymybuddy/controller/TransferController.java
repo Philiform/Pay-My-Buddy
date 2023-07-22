@@ -20,13 +20,24 @@ import com.paymybuddy.service.dto.TransferTableDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
+// TODO: Auto-generated Javadoc
+/** The Constant log. */
 @Slf4j
 @Controller
 public class TransferController {
 
+	/** The service. */
 	@Autowired
 	private TransferService service;
 
+	/**
+	 * Transfer.
+	 *
+	 * @param model the model
+	 * @param page the page
+	 * @param size the size
+	 * @return HTML page
+	 */
 	@GetMapping("/user/transfer")
 	public String transfer(Model model,
 			@RequestParam(name = "page", defaultValue = "0") int page,
@@ -68,6 +79,15 @@ public class TransferController {
 		return "transfer";
 	}
 
+	/**
+	 * Save transfer money.
+	 *
+	 * @param transferMoneyDTO the transfer money DTO
+	 * @param model the model
+	 * @param bindingResult the binding result
+	 * @param redirectAttributes the redirect attributes
+	 * @return HTML page
+	 */
 	@PostMapping("/user/saveTransferMoney")
 	public String saveTransferMoney(@ModelAttribute TransferMoneyDTO transferMoneyDTO, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		log.info("saveTransferMoney");

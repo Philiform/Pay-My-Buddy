@@ -17,16 +17,26 @@ import com.paymybuddy.service.dto.NewUserDTO;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
+// TODO: Auto-generated Javadoc
+/** The Constant log. */
 @Slf4j
 @Controller
 public class CreateUserController {
 
+	/** The service. */
 	@Autowired
 	private CreateUserService service;
 
+	/** The user repository. */
 	@Autowired
 	private UserRepository userRepository;
 
+	/**
+	 * Creates the user.
+	 *
+	 * @param model the model
+	 * @return HTML page
+	 */
 	@GetMapping("/newUser/createUser")
 	public String createUser(Model model) {
 		log.info("createUser");
@@ -45,6 +55,14 @@ public class CreateUserController {
 		return "createUser";
 	}
 
+	/**
+	 * Save new user.
+	 *
+	 * @param newUserDTO the new user DTO
+	 * @param model the model
+	 * @param bindingResult the binding result
+	 * @return HTML page
+	 */
 	@PostMapping("/newUser/saveNewUser")
 	public String saveNewUser(@ModelAttribute("newUserDTO") @Valid NewUserDTO newUserDTO, Model model, BindingResult bindingResult){
 		log.info("saveNewUser");

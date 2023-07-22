@@ -26,29 +26,43 @@ import com.paymybuddy.service.dto.ProfileDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
+// TODO: Auto-generated Javadoc
+/** The Constant log. */
 @Slf4j
 @Transactional
 @Service
 public class ProfileService {
 
+	/** The user repository. */
 	@Autowired
 	private UserRepository userRepository;
 
+	/** The user connection repository. */
 	@Autowired
 	private UserConnectionRepository userConnectionRepository;
 
+	/** The internal bank account repository. */
 	@Autowired
 	private InternalBankAccountRepository internalBankAccountRepository;
 
+	/** The external bank account repository. */
 	@Autowired
 	private ExternalBankAccountRepository externalBankAccountRepository;
 
+	/** The bank account repository. */
 	@Autowired
 	private BankAccountRepository bankAccountRepository;
 
+	/** The credit card repository. */
 	@Autowired
 	private CreditCardRepository creditCardRepository;
 
+	/**
+	 * Gets the profile by user id.
+	 *
+	 * @param userId the user id
+	 * @return the profile by user id
+	 */
 	public Optional<ProfileDTO> getProfileByUserId(final int userId) {
 		ProfileDTO profileDTO = new ProfileDTO();
 		List<String> profile = new ArrayList<>();
@@ -82,6 +96,11 @@ public class ProfileService {
 		return Optional.of(profileDTO);
 	}
 
+	/**
+	 * Save profile.
+	 *
+	 * @param profileDTO the profile DTO
+	 */
 	public void saveProfile(ProfileDTO profileDTO) {
 		int userId = UserConnected.getId();
 
@@ -95,6 +114,12 @@ public class ProfileService {
 		}
 	}
 
+	/**
+	 * Gets the external bank account by user id.
+	 *
+	 * @param userId the user id
+	 * @return the external bank account by user id
+	 */
 	public Optional<ExternalBankAccount> getExternalBankAccountByUserId(int userId) {
 		try {
 			return externalBankAccountRepository.findByUserId(userId);
@@ -105,6 +130,12 @@ public class ProfileService {
 		return Optional.empty();
 	}
 
+	/**
+	 * Save bank account.
+	 *
+	 * @param externalBankAccount the external bank account
+	 * @return the optional
+	 */
 	public Optional<BankAccount> saveBankAccount(ExternalBankAccount externalBankAccount) {
 		Optional<BankAccount> bankAccountSaved = Optional.empty();
 
@@ -148,6 +179,12 @@ public class ProfileService {
 		return bankAccountSaved;
 	}
 
+	/**
+	 * Save credit card.
+	 *
+	 * @param externalBankAccount the external bank account
+	 * @return the optional
+	 */
 	public Optional<CreditCard> saveCreditCard(ExternalBankAccount externalBankAccount) {
 		Optional<CreditCard> creditCardSaved = Optional.empty();
 
@@ -193,6 +230,9 @@ public class ProfileService {
 		return creditCardSaved;
 	}
 
+	/**
+	 * Delete profile.
+	 */
 	public void deleteProfile() {
 		try {
 			int userId = UserConnected.getId();
@@ -233,6 +273,11 @@ public class ProfileService {
 		}
 	}
 
+	/**
+	 * Delete bank account.
+	 *
+	 * @param externalBankAccountId the external bank account id
+	 */
 	public void deleteBankAccount(int externalBankAccountId) {
 		try {
 			if(externalBankAccountId > 0) {
@@ -258,6 +303,11 @@ public class ProfileService {
 		}
 	}
 
+	/**
+	 * Delete credit card.
+	 *
+	 * @param externalBankAccountId the external bank account id
+	 */
 	public void deleteCreditCard(int externalBankAccountId) {
 		try {
 			if(externalBankAccountId > 0) {

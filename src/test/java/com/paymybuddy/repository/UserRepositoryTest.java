@@ -17,18 +17,28 @@ import com.paymybuddy.model.User;
 
 import jakarta.validation.ConstraintViolationException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class UserRepositoryTest.
+ */
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class UserRepositoryTest {
 
+	/** The user. */
 	private User user;
 
+	/** The entity manager. */
 	@Autowired
 	private TestEntityManager entityManager;
 
+	/** The repository. */
 	@Autowired
 	private UserRepository repository;
 
+	/**
+	 * Sets the up.
+	 */
 	@BeforeEach
 	void setUp() {
 		user = new User();
@@ -38,6 +48,9 @@ public class UserRepositoryTest {
 		user.setDeleted(false);
 	}
 
+	/**
+	 * Test given new user when save user then return new user.
+	 */
 	@Test
 	public void testGivenNewUser_WhenSaveUser_ThenReturnNewUser() {
 		User savedUser = repository.save(user);
@@ -51,6 +64,9 @@ public class UserRepositoryTest {
 		assertThat(user.isDeleted()).isEqualTo(existUser.isDeleted());
 	}
 
+	/**
+	 * Test given new user with bad email when save user then throws constraint violation exception.
+	 */
 	@Test
 	public void testGivenNewUserWithBadEmail_WhenSaveUser_ThenThrowsConstraintViolationException() {
 		user.setEmail("hemail.com");
@@ -58,6 +74,9 @@ public class UserRepositoryTest {
 		assertThrows(ConstraintViolationException.class, () -> repository.save(user));
 	}
 
+	/**
+	 * Test given new user with bad password when save user then throws constraint violation exception.
+	 */
 	@Test
 	public void testGivenNewUserWithBadPassword_WhenSaveUser_ThenThrowsConstraintViolationException() {
 		user.setPassword("0123456789012345678901234567890123456789");
@@ -65,6 +84,9 @@ public class UserRepositoryTest {
 		assertThrows(ConstraintViolationException.class, () -> repository.save(user));
 	}
 
+	/**
+	 * Test given email when find by email then return not empty user.
+	 */
 	@Test
 	public void testGivenEmail_WhenFindByEmail_ThenReturnNotEmptyUser() {
 		Optional<User> userByEmail = repository.findByEmail("a@email.com");
@@ -72,6 +94,9 @@ public class UserRepositoryTest {
 		assertThat(userByEmail).isNotEmpty();
 	}
 
+	/**
+	 * Test given email unknow when find by email then return empty user.
+	 */
 	@Test
 	public void testGivenEmailUnknow_WhenFindByEmail_ThenReturnEmptyUser() {
 		Optional<User> userByEmail = repository.findByEmail("i@email.com");
@@ -79,6 +104,9 @@ public class UserRepositoryTest {
 		assertThat(userByEmail).isEmpty();
 	}
 
+	/**
+	 * Test given modified user when save user then return modified user.
+	 */
 	@Test
 	public void testGivenModifiedUser_WhenSaveUser_ThenReturnModifiedUser() {
 		User savedUser = repository.save(user);
@@ -91,6 +119,9 @@ public class UserRepositoryTest {
 		assertThat(existUser.isDeleted()).isEqualTo(true);
 	}
 
+	/**
+	 * Test given user when delete user then return 1 user.
+	 */
 	@Test
 	public void testGivenUser_WhenDeleteUser_ThenReturn1User() {
 		User savedUser = repository.save(user);

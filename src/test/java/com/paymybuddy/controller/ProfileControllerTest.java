@@ -26,22 +26,37 @@ import com.paymybuddy.model.User;
 import com.paymybuddy.service.ProfileService;
 import com.paymybuddy.service.dto.ProfileDTO;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ProfileControllerTest.
+ */
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 class ProfileControllerTest {
 
+	/** The controller. */
 	@Autowired
 	private ProfileController controller;
 
+	/** The mock mvc. */
 	@Autowired
 	private MockMvc mockMvc;
 
+	/** The service. */
 	@MockBean
 	public ProfileService service;
 
+	/** The profile DTO. */
 	private static ProfileDTO profileDTO;
+	
+	/** The external bank account. */
 	private static ExternalBankAccount externalBankAccount;
 
+	/**
+	 * Sets the up before class.
+	 *
+	 * @throws Exception the exception
+	 */
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		profileDTO = new ProfileDTO();
@@ -56,11 +71,21 @@ class ProfileControllerTest {
 
 	}
 
+	/**
+	 * Test given controller then return not null.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGivenController_ThenReturnNotNull() throws Exception {
 		assertThat(controller).isNotNull();
 	}
 
+	/**
+	 * Test given get user profile then return ok.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGivenGetUserProfile_ThenReturnOk() throws Exception {
 		given(service.getProfileByUserId(any(Integer.class))).willReturn(Optional.of(profileDTO));
@@ -76,6 +101,11 @@ class ProfileControllerTest {
 		verify(service, times(1)).getExternalBankAccountByUserId(any(Integer.class));
 	}
 
+	/**
+	 * Test given new user profile when save new user then return redirect to profile.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGivenNewUserProfile_WhenSaveNewUser_ThenReturnRedirectToProfile() throws Exception {
 		mockMvc
@@ -86,6 +116,11 @@ class ProfileControllerTest {
 //			.andDo(print());
 	}
 
+	/**
+	 * Test given new bank account when save bank account then return redirect to profile.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGivenNewBankAccount_WhenSaveBankAccount_ThenReturnRedirectToProfile() throws Exception {
 		mockMvc
@@ -96,6 +131,11 @@ class ProfileControllerTest {
 //			.andDo(print());
 	}
 
+	/**
+	 * Test given new credit card when save credit card then return redirect to profile.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGivenNewCreditCard_WhenSaveCreditCard_ThenReturnRedirectToProfile() throws Exception {
 		mockMvc
@@ -106,6 +146,11 @@ class ProfileControllerTest {
 //			.andDo(print());
 	}
 
+	/**
+	 * Test when delete profile then return redirect to login.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void test_WhenDeleteProfile_ThenReturnRedirectToLogin() throws Exception {
 		mockMvc
@@ -115,6 +160,11 @@ class ProfileControllerTest {
 //			.andDo(print());
 	}
 
+	/**
+	 * Test when delete bank account then return redirect to profile.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void test_WhenDeleteBankAccount_ThenReturnRedirectToProfile() throws Exception {
 		mockMvc
@@ -125,6 +175,11 @@ class ProfileControllerTest {
 //			.andDo(print());
 	}
 
+	/**
+	 * Test when delete credit card then return redirect to profile.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void test_WhenDeleteCreditCard_ThenReturnRedirectToProfile() throws Exception {
 		mockMvc

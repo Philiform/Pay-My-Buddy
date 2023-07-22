@@ -30,24 +30,43 @@ import com.paymybuddy.service.TransferService;
 import com.paymybuddy.service.dto.TransferMoneyDTO;
 import com.paymybuddy.service.dto.TransferTableDTO;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TransferControllerTest.
+ */
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 class TransferControllerTest {
 
+	/** The controller. */
 	@Autowired
 	private TransferController controller;
 
+	/** The mock mvc. */
 	@Autowired
 	private MockMvc mockMvc;
 
+	/** The service. */
 	@MockBean
 	public TransferService service;
 
+	/** The page transfer table DTO. */
 	private static Page<TransferTableDTO> pageTransferTableDTO;
+	
+	/** The list DTO. */
 	private static List<TransferTableDTO> listDTO;
+	
+	/** The transfer table DTO. */
 	private static TransferTableDTO transferTableDTO;
+	
+	/** The transfer money DTO. */
 	private static TransferMoneyDTO transferMoneyDTO;
 
+	/**
+	 * Sets the up before class.
+	 *
+	 * @throws Exception the exception
+	 */
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		transferMoneyDTO = new TransferMoneyDTO();
@@ -71,11 +90,21 @@ class TransferControllerTest {
 
 	}
 
+	/**
+	 * Test given controller then return not null.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGivenController_ThenReturnNotNull() throws Exception {
 		assertThat(controller).isNotNull();
 	}
 
+	/**
+	 * Test given get transfer then return ok.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGivenGetTransfer_ThenReturnOk() throws Exception {
 		given(service.getNewTransferDTO(any(Integer.class))).willReturn(transferMoneyDTO);
@@ -91,6 +120,11 @@ class TransferControllerTest {
 		verify(service, times(1)).getTransferByUserSender(any(Integer.class), any());
 	}
 
+	/**
+	 * Test given new transfer money when save transfer money then return redirect to transfer.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGivenNewTransferMoney_WhenSaveTransferMoney_ThenReturnRedirectToTransfer() throws Exception {
 		given(service.saveTransferMoney(any(), any(Integer.class))).willReturn(ResponseForOperation.OK);
@@ -105,6 +139,11 @@ class TransferControllerTest {
 		verify(service, times(1)).saveTransferMoney(any(), any(Integer.class));
 	}
 
+	/**
+	 * Test given bad new transfer money when save transfer money then return redirect to transfer.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGivenBadNewTransferMoney_WhenSaveTransferMoney_ThenReturnRedirectToTransfer() throws Exception {
 		given(service.saveTransferMoney(any(), any(Integer.class))).willReturn(ResponseForOperation.NO_BANK_ACCOUNT_OR_CREDIT_CARD);

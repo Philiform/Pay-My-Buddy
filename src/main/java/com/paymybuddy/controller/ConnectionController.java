@@ -19,12 +19,24 @@ import com.paymybuddy.service.dto.EmailUserConnectionDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
+// TODO: Auto-generated Javadoc
+/** The Constant log. */
 @Slf4j
 @Controller
 public class ConnectionController {
+	
+	/** The service. */
 	@Autowired
 	private ConnectionService service;
 
+	/**
+	 * Connection.
+	 *
+	 * @param model the model
+	 * @param page the page
+	 * @param size the size
+	 * @return HTML page
+	 */
 	@GetMapping("/user/transfer/connection")
 	public String connection(Model model,
 			@RequestParam(name = "page", defaultValue = "0") int page,
@@ -62,6 +74,15 @@ public class ConnectionController {
 		return "connection";
 	}
 
+	/**
+	 * Save connection.
+	 *
+	 * @param emailUserConnectionDTO the email user connection DTO
+	 * @param model the model
+	 * @param bindingResult the binding result
+	 * @param redirectAttributes the redirect attributes
+	 * @return HTML page
+	 */
 	@PostMapping("/user/transfer/saveConnection")
 	public String saveConnection(@ModelAttribute EmailUserConnectionDTO emailUserConnectionDTO, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		log.info("saveConnection");
@@ -103,6 +124,12 @@ public class ConnectionController {
 //		return "connection";
 	}
 
+	/**
+	 * Delete connection.
+	 *
+	 * @param userConnectionId the user connection id
+	 * @return HTML page
+	 */
 	@GetMapping("/user/transfer/deleteConnection")
 	public String deleteConnection(@RequestParam(name = "id") int userConnectionId/*, Model model*/) {
 		log.info("deleteConnection");

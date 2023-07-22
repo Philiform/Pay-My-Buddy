@@ -15,13 +15,23 @@ import com.paymybuddy.security.model.CustomUserDetails;
 
 import lombok.extern.slf4j.Slf4j;
 
+// TODO: Auto-generated Javadoc
+/** The Constant log. */
 @Slf4j
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
 
+	/** The repository. */
 	@Autowired
 	private UserRepository repository;
 
+	/**
+	 * Load user by username.
+	 *
+	 * @param username the username
+	 * @return the user details
+	 * @throws UsernameNotFoundException the username not found exception
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		log.debug("==> F:loadUserByUsername");

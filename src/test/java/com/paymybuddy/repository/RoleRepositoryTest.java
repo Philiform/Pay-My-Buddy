@@ -15,19 +15,31 @@ import org.springframework.dao.DataIntegrityViolationException;
 import com.paymybuddy.model.Role;
 import com.paymybuddy.model.User;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RoleRepositoryTest.
+ */
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class RoleRepositoryTest {
 
+	/** The role. */
 	private Role role;
+
+	/** The user. */
 	private User user;
 
+	/** The entity manager. */
 	@Autowired
 	private TestEntityManager entityManager;
 
+	/** The repository. */
 	@Autowired
 	private RoleRepository repository;
 
+	/**
+	 * Sets the up.
+	 */
 	@BeforeEach
 	void setUp() {
 		role = new Role();
@@ -43,6 +55,9 @@ public class RoleRepositoryTest {
 		user.getRoles().add(role);
 	}
 
+	/**
+	 * Test given new role when save role then return new role.
+	 */
 	@Test
 	public void testGivenNewRole_WhenSaveRole_ThenReturnNewRole() {
 		Role savedRole = repository.save(role);
@@ -53,6 +68,9 @@ public class RoleRepositoryTest {
 		assertThat(role.getUsers().size()).isEqualTo(existRole.getUsers().size());
 	}
 
+	/**
+	 * Test given role already exist when save role then throws data integrity violation exception.
+	 */
 	@Test
 	public void testGivenRoleAlreadyExist_WhenSaveRole_ThenThrowsDataIntegrityViolationException() {
 		role.setRole("Admin");

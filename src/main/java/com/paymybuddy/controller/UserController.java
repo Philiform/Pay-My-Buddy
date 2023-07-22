@@ -13,10 +13,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
+// TODO: Auto-generated Javadoc
+/** The Constant log. */
 @Slf4j
 @Controller
 public class UserController {
 
+	/**
+	 * Redirect home.
+	 *
+	 * @return HTML page
+	 */
 	@GetMapping("/")
 	public String redirectHome() {
 		log.info("redirectHome");
@@ -35,6 +42,12 @@ public class UserController {
 		}
 	}
 
+	/**
+	 * Contact.
+	 *
+	 * @param model the model
+	 * @return HTML page
+	 */
 	@GetMapping("/user/contact")
 	public String contact(Model model) {
 		log.info("contact");
@@ -44,6 +57,13 @@ public class UserController {
 		return "contact";
 	}
 
+	/**
+	 * Logout page.
+	 *
+	 * @param request the request
+	 * @param response the response
+	 * @return HTML page
+	 */
 	@GetMapping("/logoff")
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
 		log.info("logoutPage");

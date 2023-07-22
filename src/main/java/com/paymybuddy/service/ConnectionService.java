@@ -22,17 +22,28 @@ import com.paymybuddy.service.dto.EmailUserConnectionDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
+// TODO: Auto-generated Javadoc
+/** The Constant log. */
 @Slf4j
 @Transactional
 @Service
 public class ConnectionService {
 
+	/** The user connection repository. */
 	@Autowired
 	private UserConnectionRepository userConnectionRepository;
 
+	/** The user repository. */
 	@Autowired
 	private UserRepository userRepository;
 
+	/**
+	 * Gets the list email and pseudo by user sender.
+	 *
+	 * @param userSender the user sender
+	 * @param pageable the pageable
+	 * @return the list email and pseudo by user sender
+	 */
 	public Page<EmailUserConnectionDTO> getListEmailAndPseudoByUserSender(final int userSender, final Pageable pageable) {
 		List<EmailUserConnectionDTO> listDTO = new ArrayList<>();
 
@@ -61,6 +72,13 @@ public class ConnectionService {
 		return new PageImpl<EmailUserConnectionDTO>(listDTO);
 	}
 
+	/**
+	 * Save connection.
+	 *
+	 * @param emailUserConnectionDTO the email user connection DTO
+	 * @param userId the user id
+	 * @return the response for operation
+	 */
 	public ResponseForOperation saveConnection(EmailUserConnectionDTO emailUserConnectionDTO, int userId) {
 		try {
 			// récupérer l'userId qui correspond à l'email
@@ -86,6 +104,11 @@ public class ConnectionService {
 
 			log.debug("userSender.getUserConnections = " + userSender.getUserConnections());
 
+			// définir les cas de figures:
+			//		- userRecipientPresent			: le destinataire existe-t-il déjà ?
+			//		- pseudoIsPresent				: le pseudo du destinataire existe-t-il?
+			//		- userRecipientDeletedPresent	: le destinataire a-t-il été supprimé ?
+			//		- pseudoDeletedIsPresent		: le pseudo du destinataire supprimé existe-t-il ?
 			UserConnection userConnection = null;
 			Optional<User> userRecipientPresent = Optional.empty();
 			boolean pseudoIsPresent = false;
@@ -93,21 +116,26 @@ public class ConnectionService {
 			boolean pseudoDeletedIsPresent = false;
 
 			for(UserConnection uc: userSender.getUserConnections()) {
+				// la connection n'a pas été supprimée
 				if(!uc.isDeleted()) {
+					// le destinataire existe déjà
 					if(uc.getUserRecipient().equals(userRecipient.get())) {
 						userRecipientPresent = userRecipient;
 						userConnection = uc;
 					}
 
+					// le pseudo existe déjà
 					if(uc.getPseudo().equals(pseudo)) {
 						pseudoIsPresent = true;
 					}
-				} else {
+				} else {// la connection a été supprimée
+					// le destinataire supprimé existe déjà
 					if(uc.getUserRecipient().equals(userRecipient.get())) {
 						userRecipientDeletedPresent = userRecipient;
 						userConnection = uc;
 					}
 
+					// le pseudo supprimé existe déjà
 					if(uc.getPseudo().equals(pseudo)) {
 						pseudoDeletedIsPresent = true;
 					}
@@ -171,6 +199,11 @@ public class ConnectionService {
 		return ResponseForOperation.OK;
 	}
 
+	/**
+	 * Delete connection.
+	 *
+	 * @param userConnectionId the user connection id
+	 */
 	public void deleteConnection(int userConnectionId) {
 		try {
 			if(userConnectionId > 0) {

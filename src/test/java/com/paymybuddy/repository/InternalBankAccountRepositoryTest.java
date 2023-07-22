@@ -16,19 +16,31 @@ import com.paymybuddy.model.User;
 
 import jakarta.validation.ConstraintViolationException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class InternalBankAccountRepositoryTest.
+ */
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class InternalBankAccountRepositoryTest {
 
+	/** The internal bank account. */
 	private InternalBankAccount internalBankAccount;
+
+	/** The user. */
 	private User user;
 
+	/** The entity manager. */
 	@Autowired
 	private TestEntityManager entityManager;
 
+	/** The repository. */
 	@Autowired
 	private InternalBankAccountRepository repository;
 
+	/**
+	 * Sets the up.
+	 */
 	@BeforeEach
 	void setUp() {
 		user = new User();
@@ -44,6 +56,9 @@ public class InternalBankAccountRepositoryTest {
 		user.setInternalBankAccount(internalBankAccount);
 	}
 
+	/**
+	 * Test given new internal bank account when saveinternal bank account then return new internal bank account.
+	 */
 	@Test
 	public void testGivenNewInternalBankAccount_WhenSaveinternalBankAccount_ThenReturnNewInternalBankAccount() {
 		InternalBankAccount savedInternalBankAccount = repository.save(internalBankAccount);
@@ -54,6 +69,9 @@ public class InternalBankAccountRepositoryTest {
 		assertThat(internalBankAccount.getBankBalance()).isEqualTo(existInternalBankAccount.getBankBalance());
 	}
 
+	/**
+	 * Test given new internal bank account with bad bank balance over max when save internal bank account then throws constraint violation exception.
+	 */
 	@Test
 	public void testGivenNewInternalBankAccountWithBadBankBalanceOverMax_WhenSaveInternalBankAccount_ThenThrowsConstraintViolationException() {
 		internalBankAccount.setBankBalance((float) 100000.55);
@@ -61,6 +79,9 @@ public class InternalBankAccountRepositoryTest {
 		assertThrows(ConstraintViolationException.class, () -> repository.save(internalBankAccount));
 	}
 
+	/**
+	 * Test given new internal bank account with bad bank balance under min when save internal bank account then throws constraint violation exception.
+	 */
 	@Test
 	public void testGivenNewInternalBankAccountWithBadBankBalanceUnderMin_WhenSaveInternalBankAccount_ThenThrowsConstraintViolationException() {
 		internalBankAccount.setBankBalance((float) -1.5);
@@ -68,6 +89,9 @@ public class InternalBankAccountRepositoryTest {
 		assertThrows(ConstraintViolationException.class, () -> repository.save(internalBankAccount));
 	}
 
+	/**
+	 * Test given new internal bank account with bad bank balance when save internal bank account then throws constraint violation exception.
+	 */
 	@Test
 	public void testGivenNewInternalBankAccountWithBadBankBalance_WhenSaveInternalBankAccount_ThenThrowsConstraintViolationException() {
 		internalBankAccount.setBankBalance((float) 100000.55);
@@ -75,6 +99,9 @@ public class InternalBankAccountRepositoryTest {
 		assertThrows(ConstraintViolationException.class, () -> repository.save(internalBankAccount));
 	}
 
+	/**
+	 * Test given modified internal bank account when save internal bank account then return modified internal bank account.
+	 */
 	@Test
 	public void testGivenModifiedInternalBankAccount_WhenSaveInternalBankAccount_ThenReturnModifiedInternalBankAccount() {
 		InternalBankAccount savedInternalBankAccount = repository.save(internalBankAccount);
@@ -87,6 +114,9 @@ public class InternalBankAccountRepositoryTest {
 		assertThat(existInternalBankAccount.getBankBalance()).isEqualTo((float) 12.34);
 	}
 
+	/**
+	 * Test given internal bank account when delete internal bank account then return 1 internal bank account.
+	 */
 	@Test
 	public void testGivenInternalBankAccount_WhenDeleteInternalBankAccount_ThenReturn1InternalBankAccount() {
 		InternalBankAccount savedInternalBankAccount = repository.save(internalBankAccount);

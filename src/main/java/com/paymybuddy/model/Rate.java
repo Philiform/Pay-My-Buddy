@@ -17,8 +17,26 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Hash code.
+ *
+ * @return the int
+ */
 @Data
+
+/**
+ * Instantiates a new rate.
+ */
 @NoArgsConstructor
+
+/**
+ * Instantiates a new rate.
+ *
+ * @param rateId the rate id
+ * @param rate the rate
+ * @param date the date
+ */
 @AllArgsConstructor
 @Entity
 @Table(name = "rate",
@@ -27,20 +45,28 @@ import lombok.NoArgsConstructor;
 	})
 public class Rate {
 
+	/** The rate id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "rate_id")
 	private int rateId;
 
+	/** The rate. */
 	@DecimalMin(value = "0.00", inclusive = true)
 	@DecimalMax(value = "99.99", inclusive = true)
 	@Column(name = "rate")
 	private float rate;
 
+	/** The date. */
 	@DateTimeFormat
 	@Column(name = "date")
 	private LocalDateTime date;
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		return "[ rateId = " + rateId + ", " +

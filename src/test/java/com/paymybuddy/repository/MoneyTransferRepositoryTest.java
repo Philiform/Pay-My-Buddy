@@ -22,22 +22,40 @@ import com.paymybuddy.model.UserConnection;
 
 import jakarta.validation.ConstraintViolationException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MoneyTransferRepositoryTest.
+ */
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class MoneyTransferRepositoryTest {
 
+	/** The money transfer. */
 	private MoneyTransfer moneyTransfer;
+
+	/** The user connection. */
 	private UserConnection userConnection;
+
+	/** The user. */
 	private User user;
+
+	/** The type operation. */
 	private InternalTypeOperation typeOperation;
+
+	/** The rate. */
 	private Rate rate;
 
+	/** The entity manager. */
 	@Autowired
 	private TestEntityManager entityManager;
 
+	/** The repository. */
 	@Autowired
 	private MoneyTransferRepository repository;
 
+	/**
+	 * Sets the up.
+	 */
 	@BeforeEach
 	void setUp() {
 		moneyTransfer = new MoneyTransfer();
@@ -68,6 +86,9 @@ public class MoneyTransferRepositoryTest {
 		moneyTransfer.setInvoiceSent(false);
 	}
 
+	/**
+	 * Test given new money transfer when save money transfer then return new money transfer.
+	 */
 	@Test
 	public void testGivenNewMoneyTransfer_WhenSaveMoneyTransfer_ThenReturnNewMoneyTransfer() {
 		MoneyTransfer savedMoneyTransfer = repository.save(moneyTransfer);
@@ -86,6 +107,9 @@ public class MoneyTransferRepositoryTest {
 		assertThat(moneyTransfer.isInvoiceSent()).isEqualTo(existMoneyTransfer.isInvoiceSent());
 	}
 
+	/**
+	 * Test given new money transfer with bad user connection when save money transfer then throws data integrity violation exception.
+	 */
 	@Test
 	public void testGivenNewMoneyTransferWithBadUserConnection_WhenSaveMoneyTransfer_ThenThrowsDataIntegrityViolationException() {
 		moneyTransfer.setUserConnection(new UserConnection());
@@ -93,6 +117,9 @@ public class MoneyTransferRepositoryTest {
 		assertThrows(DataIntegrityViolationException.class, () -> repository.save(moneyTransfer));
 	}
 
+	/**
+	 * Test given new money transfer with bad rate value min when save rate then throws constraint violation exception.
+	 */
 	@Test
 	public void testGivenNewMoneyTransferWithBadRateValueMin_WhenSaveRate_ThenThrowsConstraintViolationException() {
 		moneyTransfer.setAmount(-10);
@@ -100,6 +127,9 @@ public class MoneyTransferRepositoryTest {
 		assertThrows(ConstraintViolationException.class, () -> repository.save(moneyTransfer));
 	}
 
+	/**
+	 * Test given new money transfer with bad rate value max when save rate then throws constraint violation exception.
+	 */
 	@Test
 	public void testGivenNewMoneyTransferWithBadRateValueMax_WhenSaveRate_ThenThrowsConstraintViolationException() {
 		moneyTransfer.setAmount(10000);
@@ -107,6 +137,9 @@ public class MoneyTransferRepositoryTest {
 		assertThrows(ConstraintViolationException.class, () -> repository.save(moneyTransfer));
 	}
 
+	/**
+	 * Test given new money transfer with bad description when save money transfer then throws invalid constraint violation exception.
+	 */
 	@Test
 	public void testGivenNewMoneyTransferWithBadDescription_WhenSaveMoneyTransfer_ThenThrowsInvalidConstraintViolationException() {
 		String description = "0123456789";
@@ -116,6 +149,9 @@ public class MoneyTransferRepositoryTest {
 		assertThrows(ConstraintViolationException.class, () -> repository.save(moneyTransfer));
 	}
 
+	/**
+	 * Test given new money transfer with bad invoice when save money transfer then throws invalid constraint violation exception.
+	 */
 	@Test
 	public void testGivenNewMoneyTransferWithBadInvoice_WhenSaveMoneyTransfer_ThenThrowsInvalidConstraintViolationException() {
 		String invoice = "0123456789";

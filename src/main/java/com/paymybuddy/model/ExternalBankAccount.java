@@ -15,8 +15,28 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Hash code.
+ *
+ * @return the int
+ */
 @Data
+
+/**
+ * Instantiates a new external bank account.
+ */
 @NoArgsConstructor
+
+/**
+ * Instantiates a new external bank account.
+ *
+ * @param externalBankAccountId the external bank account id
+ * @param user the user
+ * @param bankAccount the bank account
+ * @param creditCard the credit card
+ * @param deleted the deleted
+ */
 @AllArgsConstructor
 @Entity
 @Table(name = "external_bank_account", uniqueConstraints =
@@ -24,41 +44,51 @@ import lombok.NoArgsConstructor;
 
 public class ExternalBankAccount {
 
+	/** The external bank account id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "external_bank_account_id")
 	private int externalBankAccountId;
 
+	/** The user. */
 	@OneToOne(
 			fetch = FetchType.LAZY,
 			cascade = {
 					CascadeType.PERSIST,
 					CascadeType.MERGE
 			})
-	@JoinColumn(name = "user_id", nullable = true)
+	@JoinColumn(name = "user_id", unique = false, nullable = true)
 	private User user = null;
 
+	/** The bank account. */
 	@OneToOne(
 			fetch = FetchType.LAZY,
 			cascade = {
 					CascadeType.PERSIST,
 					CascadeType.MERGE
 			})
-	@JoinColumn(name = "bank_account_id", nullable = true)
+	@JoinColumn(name = "bank_account_id", unique = false, nullable = true)
 	private BankAccount bankAccount = null;
 
+	/** The credit card. */
 	@OneToOne(
 			fetch = FetchType.LAZY,
 			cascade = {
 					CascadeType.PERSIST,
 					CascadeType.MERGE
 			})
-	@JoinColumn(name = "credit_card_id", nullable = true)
+	@JoinColumn(name = "credit_card_id", unique = false, nullable = true)
 	private CreditCard creditCard = null;
 
+	/** The deleted. */
 	@Column(name = "deleted", length = 1, columnDefinition = "boolean default false")
 	private boolean deleted = false;
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		String u = user != null ? String.valueOf(user.getUserId()) : "NULL";

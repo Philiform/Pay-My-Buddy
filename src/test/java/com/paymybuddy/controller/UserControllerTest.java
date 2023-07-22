@@ -17,21 +17,37 @@ import com.paymybuddy.model.Role;
 import com.paymybuddy.model.User;
 import com.paymybuddy.security.UserConnected;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class UserControllerTest.
+ */
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 class UserControllerTest {
 
+	/** The controller. */
 	@Autowired
 	private UserController controller;
 
+	/** The mock mvc. */
 	@Autowired
 	private MockMvc mockMvc;
 
+	/**
+	 * Test given controller then return not null.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGivenController_ThenReturnNotNull() throws Exception {
 		assertThat(controller).isNotNull();
 	}
 
+	/**
+	 * Test given admin when redirect home then return redirection.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGivenAdmin_WhenRedirectHome_ThenReturnRedirection() throws Exception {
 		Role role = new Role();
@@ -49,6 +65,11 @@ class UserControllerTest {
 //			.andDo(print());
 	}
 
+	/**
+	 * Test given accounting when redirect home then return redirection.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGivenAccounting_WhenRedirectHome_ThenReturnRedirection() throws Exception {
 		Role role = new Role();
@@ -66,6 +87,11 @@ class UserControllerTest {
 //			.andDo(print());
 	}
 
+	/**
+	 * Test given user when redirect home then return redirection.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGivenUser_WhenRedirectHome_ThenReturnRedirection() throws Exception {
 		Role role = new Role();
@@ -83,6 +109,11 @@ class UserControllerTest {
 //			.andDo(print());
 	}
 
+	/**
+	 * Test when choose contact then return ok.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void test_WhenChooseContact_ThenReturnOk() throws Exception {
 		mockMvc
@@ -93,6 +124,11 @@ class UserControllerTest {
 //			.andDo(print());
 	}
 
+	/**
+	 * Test when choose logout then return redirection.
+	 *
+	 * @throws Exception the exception
+	 */
 	@WithMockUser(username = "c@email.com", password = "123456", roles = {"USER"})
 	@Test
 	public void test_WhenChooseLogout_ThenReturnRedirection() throws Exception {

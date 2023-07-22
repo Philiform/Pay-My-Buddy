@@ -17,18 +17,28 @@ import com.paymybuddy.model.Rate;
 
 import jakarta.validation.ConstraintViolationException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RateRepositoryTest.
+ */
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class RateRepositoryTest {
 
+	/** The rate. */
 	private Rate rate;
 
+	/** The entity manager. */
 	@Autowired
 	private TestEntityManager entityManager;
 
+	/** The repository. */
 	@Autowired
 	private RateRepository repository;
 
+	/**
+	 * Sets the up.
+	 */
 	@BeforeEach
 	void setUp() {
 		rate = new Rate();
@@ -37,6 +47,9 @@ public class RateRepositoryTest {
 		rate.setDate(LocalDateTime.now());
 	}
 
+	/**
+	 * Test given new rate when save rate then return new rate.
+	 */
 	@Test
 	public void testGivenNewRate_WhenSaveRate_ThenReturnNewRate() {
 		Rate savedRate = repository.save(rate);
@@ -46,6 +59,9 @@ public class RateRepositoryTest {
 		assertThat(rate.getDate()).isEqualTo(existRate.getDate());
 	}
 
+	/**
+	 * Test given new rate with bad rate value min when save rate then throws constraint violation exception.
+	 */
 	@Test
 	public void testGivenNewRateWithBadRateValueMin_WhenSaveRate_ThenThrowsConstraintViolationException() {
 		rate.setRate((float) -0.5);
@@ -53,6 +69,9 @@ public class RateRepositoryTest {
 		assertThrows(ConstraintViolationException.class, () -> repository.save(rate));
 	}
 
+	/**
+	 * Test given new rate with bad rate value max when save rate then throws constraint violation exception.
+	 */
 	@Test
 	public void testGivenNewRateWithBadRateValueMax_WhenSaveRate_ThenThrowsConstraintViolationException() {
 		rate.setRate((float) 1000.5);
@@ -60,6 +79,9 @@ public class RateRepositoryTest {
 		assertThrows(ConstraintViolationException.class, () -> repository.save(rate));
 	}
 
+	/**
+	 * Test given modified rate when save rate then return modified rate.
+	 */
 	@Test
 	public void testGivenModifiedRate_WhenSaveRate_ThenReturnModifiedRate() {
 		Rate savedRate = repository.save(rate);
@@ -72,6 +94,9 @@ public class RateRepositoryTest {
 		assertThat(existRate.getRate()).isEqualTo((float) 0.75);
 	}
 
+	/**
+	 * Test given rate when delete rate then return 1 rate.
+	 */
 	@Test
 	public void testGivenRate_WhenDeleteRate_ThenReturn1Rate() {
 		Rate savedRate = repository.save(rate);

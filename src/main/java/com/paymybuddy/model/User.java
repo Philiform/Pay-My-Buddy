@@ -39,7 +39,7 @@ public class User {
 	@Size(min = 6, max = 50)
 	private String email;
 
-	@Column(name = "password", nullable = true, unique = true)
+	@Column(name = "password", nullable = true, unique = false)
 	@Size(min = 50, max = 80)
 	private String password;
 

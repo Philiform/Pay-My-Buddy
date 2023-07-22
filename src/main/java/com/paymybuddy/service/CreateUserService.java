@@ -19,26 +19,39 @@ import com.paymybuddy.service.dto.NewUserDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
+// TODO: Auto-generated Javadoc
+/** The Constant log. */
 @Slf4j
 @Transactional
 @Service
 public class CreateUserService {
 
+	/** The user repository. */
 	@Autowired
 	private UserRepository userRepository;
 
+	/** The external bank account repository. */
 	@Autowired
 	private ExternalBankAccountRepository externalBankAccountRepository;
 
+	/** The internal bank account repository. */
 	@Autowired
 	private InternalBankAccountRepository internalBankAccountRepository;
 
+	/** The role repository. */
 	@Autowired
 	private RoleRepository roleRepository;
 
+	/** The password encoder. */
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	/**
+	 * Save new user.
+	 *
+	 * @param newUserDTO the new user DTO
+	 * @return the response for operation
+	 */
 	public ResponseForOperation saveNewUser(final NewUserDTO newUserDTO) {
 		try {
 			if(!userRepository.findByEmailNotDeleted(newUserDTO.getEmail()).isEmpty()) {

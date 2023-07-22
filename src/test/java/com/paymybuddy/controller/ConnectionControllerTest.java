@@ -29,24 +29,43 @@ import com.paymybuddy.model.UserConnection;
 import com.paymybuddy.service.ConnectionService;
 import com.paymybuddy.service.dto.EmailUserConnectionDTO;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ConnectionControllerTest.
+ */
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 class ConnectionControllerTest {
 
+	/** The controller. */
 	@Autowired
 	private ConnectionController controller;
 
+	/** The mock mvc. */
 	@Autowired
 	private MockMvc mockMvc;
 
+	/** The service. */
 	@MockBean
 	private ConnectionService service;
 
+	/** The page email user connection DTO. */
 	private static Page<EmailUserConnectionDTO> pageEmailUserConnectionDTO;
+	
+	/** The list DTO. */
 	private static List<EmailUserConnectionDTO> listDTO;
+	
+	/** The email user connection DTO 1. */
 	private static EmailUserConnectionDTO emailUserConnectionDTO1;
+	
+	/** The user connection 1. */
 	private static UserConnection userConnection1;
 
+	/**
+	 * Sets the up before class.
+	 *
+	 * @throws Exception the exception
+	 */
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		userConnection1 = new UserConnection();
@@ -63,11 +82,21 @@ class ConnectionControllerTest {
 
 	}
 
+	/**
+	 * Test given controller then return not null.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGivenController_ThenReturnNotNull() throws Exception {
 		assertThat(controller).isNotNull();
 	}
 
+	/**
+	 * Test when choose connection then return ok.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void test_WhenChooseConnection_ThenReturnOk() throws Exception {
 		given(service.getListEmailAndPseudoByUserSender(any(Integer.class), any())).willReturn(pageEmailUserConnectionDTO);
@@ -82,6 +111,11 @@ class ConnectionControllerTest {
 		verify(service, times(1)).getListEmailAndPseudoByUserSender(any(Integer.class), any());
 	}
 
+	/**
+	 * Test given new connection when save connection then return redirect ok.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGivenNewConnection_WhenSaveConnection_ThenReturnRedirectOk() throws Exception {
 		given(service.saveConnection(any(), any(Integer.class))).willReturn(ResponseForOperation.OK);
@@ -96,6 +130,11 @@ class ConnectionControllerTest {
 		verify(service, times(1)).saveConnection(any(), any(Integer.class));
 	}
 
+	/**
+	 * Test given invalid email when save connection then return redirect error.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testGivenInvalidEmail_WhenSaveConnection_ThenReturnRedirectError() throws Exception {
 		given(service.saveConnection(any(), any(Integer.class))).willReturn(ResponseForOperation.EMAIL_INVALID);
@@ -110,6 +149,11 @@ class ConnectionControllerTest {
 		verify(service, times(1)).saveConnection(any(), any(Integer.class));
 	}
 
+	/**
+	 * Test when delete connection then return redirect ok.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void test_WhenDeleteConnection_ThenReturnRedirectOk() throws Exception {
 		mockMvc

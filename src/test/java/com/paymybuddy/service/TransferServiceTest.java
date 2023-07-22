@@ -42,63 +42,135 @@ import com.paymybuddy.service.dto.TransferTableDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
+// TODO: Auto-generated Javadoc
+/** The Constant log. */
 @Slf4j
 @ExtendWith(MockitoExtension.class)
 class TransferServiceTest {
 
+	/** The service. */
 	@InjectMocks
 	private TransferService service;
 
+	/** The user repository. */
 	@Mock
 	private UserRepository userRepository;
 
+	/** The external bank account repository. */
 	@Mock
 	private ExternalBankAccountRepository externalBankAccountRepository;
 
+	/** The internal bank account repository. */
 	@Mock
 	private InternalBankAccountRepository internalBankAccountRepository;
 
+	/** The user connection repository. */
 	@Mock
 	private UserConnectionRepository userConnectionRepository;
 
+	/** The money transfer repository. */
 	@Mock
 	private MoneyTransferRepository moneyTransferRepository;
 
+	/** The rate repository. */
 	@Mock
 	private RateRepository rateRepository;
 
+	/** The page transfer table DTO. */
 	private Page<TransferTableDTO> pageTransferTableDTO;
+	
+	/** The list DTO. */
 	private List<TransferTableDTO> listDTO;
+	
+	/** The transfer table DTO 1. */
 	private TransferTableDTO transferTableDTO1;
+	
+	/** The transfer table DTO 2. */
 	private TransferTableDTO transferTableDTO2;
+	
+	/** The transfer table DTO 3. */
 	private TransferTableDTO transferTableDTO3;
+	
+	/** The transfer money DTO 1. */
 	private TransferMoneyDTO transferMoneyDTO1;
+	
+	/** The transfer money DTO 2. */
 	private TransferMoneyDTO transferMoneyDTO2;
+	
+	/** The transfer money DTO 3. */
 	private TransferMoneyDTO transferMoneyDTO3;
+	
+	/** The transfer money DTO 4. */
 	private TransferMoneyDTO transferMoneyDTO4;
+	
+	/** The user 1. */
 	private User user1;
+	
+	/** The user 2. */
 	private User user2;
+	
+	/** The user 3. */
 	private User user3;
+	
+	/** The external bank account. */
 	private ExternalBankAccount externalBankAccount;
+	
+	/** The internal bank account 1. */
 	private InternalBankAccount internalBankAccount1;
+	
+	/** The internal bank account 2. */
 	private InternalBankAccount internalBankAccount2;
+	
+	/** The user connection 1. */
 	private UserConnection userConnection1;
+	
+	/** The user connection 2. */
 	private UserConnection userConnection2;
+	
+	/** The user connection 3. */
 	private UserConnection userConnection3;
+	
+	/** The rate 1. */
 	private Rate rate1;
+	
+	/** The rate 2. */
 	private Rate rate2;
+	
+	/** The list user connection. */
 	private List<UserConnection> listUserConnection;
+	
+	/** The list user connection id. */
 	private List<Integer> listUserConnectionId;
+	
+	/** The list money transfer. */
 	private List<MoneyTransfer> listMoneyTransfer;
+	
+	/** The page money transfer. */
 	private Page<MoneyTransfer> pageMoneyTransfer;
+	
+	/** The money transfer 1. */
 	private MoneyTransfer moneyTransfer1;
+	
+	/** The money transfer 2. */
 	private MoneyTransfer moneyTransfer2;
+	
+	/** The money transfer 3. */
 	private MoneyTransfer moneyTransfer3;
 
+	/** The page transfer table DTO empty. */
 	private Page<TransferTableDTO> pageTransferTableDTOEmpty;
+	
+	/** The list DTO empty. */
 	private List<TransferTableDTO> listDTOEmpty;
+	
+	/** The transfer money DTO empty. */
 	private TransferMoneyDTO transferMoneyDTOEmpty;
 
+	/**
+	 * Sets the up.
+	 *
+	 * @throws Exception the exception
+	 */
 	@BeforeEach
 	void setUp() throws Exception {
 		user1 = new User();
@@ -274,6 +346,9 @@ class TransferServiceTest {
 
 	}
 
+	/**
+	 * Test transfer table DT O when get transfer by user sender then return page transfer table DTO.
+	 */
 	@Test
 	void testTransferTableDTO_WhenGetTransferByUserSender_ThenReturnPageTransferTableDTO() {
 		given(userConnectionRepository.findUserConnectionIdByUserSender(any(Integer.class))).willReturn(listUserConnectionId);
@@ -286,6 +361,9 @@ class TransferServiceTest {
 		assertThat(response.getContent()).isEqualTo(pageTransferTableDTO.getContent());
 	}
 
+	/**
+	 * Test exception when get transfer by user sender then return page transfer table DTO empty.
+	 */
 	@Test
 	void testException_WhenGetTransferByUserSender_ThenReturnPageTransferTableDTOEmpty() {
 		given(userConnectionRepository.findUserConnectionIdByUserSender(any(Integer.class))).willAnswer(invocation -> {throw new Exception();});
@@ -296,6 +374,9 @@ class TransferServiceTest {
 		assertThat(response.getContent()).isEqualTo(pageTransferTableDTOEmpty.getContent());
 	}
 
+	/**
+	 * Test transfer money DT O when get new transfer DT O then return transfer table DTO.
+	 */
 	@Test
 	void testTransferMoneyDTO_WhenGetNewTransferDTO_ThenReturnTransferTableDTO() {
 		given(userConnectionRepository.findByUserSenderAndNotDeletedOrderByPseudo(any(Integer.class))).willReturn(listUserConnection);
@@ -308,6 +389,9 @@ class TransferServiceTest {
 		assertThat(response).isEqualTo(transferMoneyDTO3);
 	}
 
+	/**
+	 * Test exception when get new transfer DT O then return transfer table DTO empty.
+	 */
 	@Test
 	void testException_WhenGetNewTransferDTO_ThenReturnTransferTableDTOEmpty() {
 		given(userConnectionRepository.findByUserSenderAndNotDeletedOrderByPseudo(any(Integer.class))).willAnswer(invocation -> {throw new Exception();});
@@ -318,6 +402,9 @@ class TransferServiceTest {
 		assertThat(response).isEqualTo(transferMoneyDTOEmpty);
 	}
 
+	/**
+	 * Test transfer money externe when save transfer money then return response for operation OK.
+	 */
 	@Test
 	void testTransferMoneyExterne_WhenSaveTransferMoney_ThenReturnResponseForOperation_OK() {
 		given(userConnectionRepository.findById(any(Integer.class))).willReturn(Optional.of(userConnection1));
@@ -334,6 +421,9 @@ class TransferServiceTest {
 		assertThat(response).isEqualTo(ResponseForOperation.OK);
 	}
 
+	/**
+	 * Test transfer money interne when save transfer money then return response for operation OK.
+	 */
 	@Test
 	void testTransferMoneyInterne_WhenSaveTransferMoney_ThenReturnResponseForOperation_OK() {
 		given(userConnectionRepository.findById(any(Integer.class))).willReturn(Optional.of(userConnection2));
@@ -352,6 +442,9 @@ class TransferServiceTest {
 		assertThat(response).isEqualTo(ResponseForOperation.OK);
 	}
 
+	/**
+	 * Test user connection id is greater than 0 when save transfer money then return response for operation ERROR.
+	 */
 	@Test
 	void testUserConnectionIdIsGreaterThan0_WhenSaveTransferMoney_ThenReturnResponseForOperation_ERROR() {
 		transferMoneyDTOEmpty.setUserConnectionId(0);
@@ -361,6 +454,9 @@ class TransferServiceTest {
 		assertThat(response).isEqualTo(ResponseForOperation.ERROR);
 	}
 
+	/**
+	 * Test no bank account and no credit card when save transfer money then return response for operation N O BAN K ACCOUN T O R CREDI T CARD.
+	 */
 	@Test
 	void testNoBankAccountAndNoCreditCard_WhenSaveTransferMoney_ThenReturnResponseForOperation_NO_BANK_ACCOUNT_OR_CREDIT_CARD() {
 		given(userConnectionRepository.findById(any(Integer.class))).willReturn(Optional.of(userConnection1));
@@ -374,6 +470,9 @@ class TransferServiceTest {
 		assertThat(response).isEqualTo(ResponseForOperation.NO_BANK_ACCOUNT_OR_CREDIT_CARD);
 	}
 
+	/**
+	 * Test amount is 0 when save transfer money then return response for operation BAN K BALANC E I S ZERO.
+	 */
 	@Test
 	void testAmountIs0_WhenSaveTransferMoney_ThenReturnResponseForOperation_BANK_BALANCE_IS_ZERO() {
 		given(userConnectionRepository.findById(any(Integer.class))).willReturn(Optional.of(userConnection2));
@@ -386,6 +485,9 @@ class TransferServiceTest {
 		assertThat(response).isEqualTo(ResponseForOperation.BANK_BALANCE_IS_ZERO);
 	}
 
+	/**
+	 * Test amount is greater than bank balance when save transfer money then return response for operation NO T ENOUG H MONEY.
+	 */
 	@Test
 	void testAmountIsGreaterThanBankBalance_WhenSaveTransferMoney_ThenReturnResponseForOperation_NOT_ENOUGH_MONEY() {
 		given(userConnectionRepository.findById(any(Integer.class))).willReturn(Optional.of(userConnection2));
@@ -402,6 +504,9 @@ class TransferServiceTest {
 		assertThat(response).isEqualTo(ResponseForOperation.NOT_ENOUGH_MONEY);
 	}
 
+	/**
+	 * Test exception when save transfer money then return response for operation ERROR.
+	 */
 	@Test
 	void testException_WhenSaveTransferMoney_ThenReturnResponseForOperation_ERROR() {
 		given(userConnectionRepository.findById(any(Integer.class))).willAnswer(invocation -> {throw new Exception();});
